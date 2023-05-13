@@ -1,1 +1,5 @@
 tools/
+package/
+.git/
+.vscode/
+.git

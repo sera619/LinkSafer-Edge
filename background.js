@@ -1,8 +1,18 @@
 // Hintergrundseite
+const ICON_DEFAULT_PATHS = {
+    "16": "/assets/img/icons/normal/icon16.png",
+    "32": "/assets/img/icons/normal/icon32.png",
+    "48": "/assets/img/icons/normal/icon48.png",
+    "64": "/assets/img/icons/normal/icon64.png",
+    "96": "/assets/img/icons/normal/icon96.png",
+    "128": "/assets/img/icons/normal/icon128.png",
+    "256": "/assets/img/icons/normal/icon256.png"
+}
 chrome.runtime.onInstalled.addListener(function () {
     // Initialisiere den Speicher
     chrome.storage.sync.set({
-        links: []
+        links: [],
+        iconPath: ICON_DEFAULT_PATHS
     }, function () {
         console.log('Linklist initialized!');
     });
@@ -20,6 +30,29 @@ function addLink(link) {
         });
     });
 }
+
+function saveAddonIcon(iconPath) {
+    chrome.storage.sync.set({
+        iconPath: iconPath
+    }, function () {
+        savedIconPath = iconPath;
+        console.log('Addon icon saved:', iconPath);
+    });
+}
+
+// Funktion zum Laden des gespeicherten Add-On-Icons
+function loadAddonIcon() {
+    chrome.storage.sync.get('iconPath', function (data) {
+        var iconPath = data.iconPath;
+        if (iconPath) {
+            changeAddonIcon(iconPath);
+            savedIconPath = iconPath;
+            console.log('Addon icon loaded:', iconPath);
+        }
+    });
+}
+
+
 
 // remove hyperlink or notice from browser storage
 function removeLink(link) {
@@ -75,7 +108,9 @@ function openNotification(message) {
 }
 
 function changeAddonIcon(iconPath) {
-    chrome.action.setIcon({ path: iconPath });
+    chrome.action.setIcon({
+        path: iconPath
+    });
     console.log("Icon updated");
 }
 
@@ -93,5 +128,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         openNotification(request.link);
     } else if (request.action === 'changeIcon') {
         changeAddonIcon(request.link);
+        saveAddonIcon(request.link);
+    }else if (request.action === 'loadIcon') {
+        loadAddonIcon();
     }
 });

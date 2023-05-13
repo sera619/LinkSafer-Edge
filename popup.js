@@ -233,12 +233,20 @@ function copyPasswordToClipboard() {
 	navigator.clipboard.writeText(generatedPassword);
 	var newpass = document.getElementById("newpass");
 	newpass.innerText = "Password copied!";
-	generatedPassword = "";	
+	generatedPassword = "";
+}
+
+function getExtensionVersion() {
+	const manifest = chrome.runtime.getManifest();
+	var version = manifest.version;
+	return version;
 }
 
 
-
 // init popup and eventhandler
+chrome.runtime.sendMessage({
+	action: 'loadIcon'
+});
 document.addEventListener("DOMContentLoaded", function () {
 	showLinks();
 	var addLinkForm = document.getElementById("addLinkForm");
@@ -274,7 +282,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	var passlenslider = document.getElementById("password-length");
 	var passsizetext = document.getElementById("passlen");
 	passsizetext.innerHTML = passlenslider.value;
-	passlenslider.addEventListener("input", function(event){
+	passlenslider.addEventListener("input", function (event) {
 		event.preventDefault();
 		passsizetext.innerHTML = passlenslider.value;
 	})
@@ -286,7 +294,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	})
 
 	var copyPassButton = document.getElementById("copy-pass-btn");
-	copyPassButton.addEventListener("click", function(event){
+	copyPassButton.addEventListener("click", function (event) {
 		event.preventDefault();
 		copyPasswordToClipboard();
 	})
@@ -297,11 +305,14 @@ document.addEventListener("DOMContentLoaded", function () {
 		changeDisplayFrame();
 	})
 
-	const VERSIONNUM = "1.5.8";
+	const VERSIONNUM = getExtensionVersion();
 	var version =
 		"v" + VERSIONNUM + "\nDevelopment & Design 2022-2023 © S3R43o3 & AI";
 	var versiontext = document.getElementById("version-text");
 	versiontext.innerText = version;
+	chrome.runtime.sendMessage({
+		action: 'loadIcon'
+	})
 });
 
 // event listerner @ browser storage

@@ -4,12 +4,13 @@
     "author": "S3R43o3",
     "version": "1.5.8",
     "icons": {
-        "16": "assets/img/icon16.png",
-        "32": "assets/img/icon32.png",
-        "48": "assets/img/icon48.png",
-        "64": "assets/img/icon64.png",
-        "128": "assets/img/icon128.png",
-        "256": "assets/img/icon256.png"
+        "16": "assets/img/icons/normal/icon16.png",
+        "32": "assets/img/icons/normal/icon32.png",
+        "48": "assets/img/icons/normal/icon48.png",
+        "64": "assets/img/icons/normal/icon64.png",
+        "96": "assets/img/icons/normal/icon96.png",
+        "128": "assets/img/icons/normal/icon128.png",
+        "256": "assets/img/icons/normal/icon256.png"
     },
     "options_page": "src/options.html",
     "description": "Link Safer is an extension for the Microsoft Edge browser that allows users to save links and notes securely.",
@@ -23,20 +24,24 @@
     },
     "action": {
         "default_icon": {
-            "16": "assets/img/icon16.png",
-            "32": "assets/img/icon32.png",
-            "48": "assets/img/icon48.png",
-            "128": "assets/img/icon128.png",
-            "256": "assets/img/icon256.png"
+            "16": "assets/img/icons/normal/icon16.png",
+            "32": "assets/img/icons/normal/icon32.png",
+            "48": "assets/img/icons/normal/icon48.png",
+            "64": "assets/img/icons/normal/icon64.png",
+            "96": "assets/img/icons/normal/icon96.png",
+            "128": "assets/img/icons/normal/icon128.png",
+            "256": "assets/img/icons/normal/icon256.png"
         },
         "default_title": "Link Safer",
         "default_popup": "popup.html",
         "icons": {
-            "16": "assets/img/icons/icon0/icon16.png",
-            "32": "assets/img/icons/icon1/icon32.png",
-            "48": "assets/img/icons/icon2/icon48.png",
-            "128": "assets/img/icons/icon3/icon128.png",
-            "256": "assets/img/icons/icon4/icon256.png"
+            "16": "assets/img/icons/hacker/icon16.png",
+            "32": "assets/img/icons/hacker/icon32.png",
+            "48": "assets/img/icons/hacker/icon48.png",
+            "64": "assets/img/icons/hacker/icon64.png",
+            "96":  "assets/img/icons/hacker/icon96.png",
+            "128": "assets/img/icons/hacker/icon128.png",
+            "256": "assets/img/icons/hacker/icon256.png"
         }
     }
 }
