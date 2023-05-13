@@ -4,10 +4,7 @@ Link Safer is a browser extension available for Edge and Chrome that provides a 
 
 ## Installation
 
-You can easily install the Link Safer extension from the Edge & Chrome Web Store.
-
-- [Edge Web Store](https://microsoftedge.microsoft.com/addons/detail/link-safer/abc123def456)
-- [Chrome Web Store](https://chrome.google.com/webstore/detail/link-safer/abc123def456)
+In while we wait for release on google addon store.
 
 Additionally, a Firefox version is also available for download from the [Firefox store](https://addons.mozilla.org/de/firefox/addon/linksafer/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search).
 
@@ -32,9 +29,9 @@ If you prefer to install the extension manually, follow these steps:
     <summary>Screenshots</summary>
     <br>
 
-- Addon Preview
-- Option Preview
-- Password Generator Preview
+- ![Addon Preview](assets/img/addon_preview.png)
+- ![Option Preview](assets\img\options_preview.png)
+- ![Password Generator Preview](assets\img\passgen_preview.png)
 
 </details>
 <br>
