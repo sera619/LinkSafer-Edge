@@ -1,44 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>Link Safer</title>
     <script src="popup.js"></script>
   </head>
   <body>
     <center>
       <!--Main Section-->
-      <div class="main">
+      <div id="main"  class="main">
         <h1>Link Safer</h1>
-        <hr>
+        <hr />
         <div class="btn-box">
-            <input type="button" id="clear-list-btn" value="Clear">
-            <input type="button" id="add-tab-btn" value="Add Tab">
-            <input type="button" id="option-btn" value="Help">
-            <input type="button" id="notify-btn" value="?">
-
-          </div>     
+          <input type="button" id="clear-list-btn" value="Clear" />
+          <input type="button" id="add-tab-btn" value="Add Tab" />
+          <input type="button" id="option-btn" value="Help" />
+          <input type="button" id="notify-btn" value="?" />
+        </div>
         <!-- LINK CONTAINER -->
         <form id="addLinkForm">
-            <input type="text" id="newLink" placeholder="Add a notice..." />
-            <input type="submit" value="Add" />
+          <input type="text" id="newLink" placeholder="Add a notice..." />
+          <input type="submit" value="Add" />
         </form>
-        <br>
+        <br />
         <div class="list-container">
-            <ul id="linkList">
-            </ul>
+          <ul id="linkList"></ul>
         </div>
       </div>
-      
-      <!-- generator section -->
 
-
-
+      <!-- passwordgenerator section -->
+      <div hidden id="generator" class="passwordgenerator">
+        <div class="password-options">
+          <h2>Password Options</h2>
+          <hr>
+          <br>
+          <label for="numbers">Include Numbers:</label>
+          <input type="checkbox" id="numbers" /><br />
+          <label for="special-characters">Include Special Characters:</label>
+          <input type="checkbox" id="special-characters" /><br />
+          <br>
+          <label for="password-length">Password Length:</label><br>
+          <p id="passlen">0</p>
+          <input type="range" id="password-length" min="5" max="40" value="30"/><br />
+          <p style="font-size: 1.3em;color: #00ff41;" id="newpass"><b>Your new password spawns here</b></p>
+          <br>
+          <button id="gen-pass-btn" class="button-with-icon">
+            <img src="../assets/img/key-solid.svg" alt="generate Icon" class="icon" style="fill: black;">
+            Generate Password</button><br />
+          <button id="copy-pass-btn" class="button-with-icon">
+            <img src="../assets/img/copy-solid.svg" alt="copy Icon" class="icon" style="fill: black;">
+            Copy Password</button><br />
+          <button id="back-btn"class="button-with-icon">
+            <img src="../assets/img/right-from-bracket-solid.svg" alt="back Icon" class="icon" style="fill: black;">
+            Back</button><br />
+        </div>
+      </div>
       <footer>
-          <p id="version-text"></p>
+        <p id="version-text"></p>
       </footer>
     </center>
   </body>
