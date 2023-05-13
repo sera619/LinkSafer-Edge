@@ -30,6 +30,13 @@
             "256": "assets/img/icon256.png"
         },
         "default_title": "Link Safer",
-        "default_popup": "popup.html"
+        "default_popup": "popup.html",
+        "icons": {
+            "16": "assets/img/icons/icon0/icon16.png",
+            "32": "assets/img/icons/icon1/icon32.png",
+            "48": "assets/img/icons/icon2/icon48.png",
+            "128": "assets/img/icons/icon3/icon128.png",
+            "256": "assets/img/icons/icon4/icon256.png"
+        }
     }
 }

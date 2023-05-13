@@ -30,6 +30,30 @@ body {
     align-items: center;
     text-align: center;
 }
+body.optionbody{
+    background: linear-gradient(to bottom right, #2c2c2c, #1c1c1c);
+    color: var(--color-red);
+    font-family: "Courier New", Courier, monospace;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+    height: max-content;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+}
+body.optionbody::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+    transform: translateX(-50%) translateY(-50%) rotate(30deg) skewX(30deg);
+    transition: transform 0.5s ease-in-out;
+}
 
 .modal{
     background: linear-gradient(to bottom right, #2c2c2c, #1c1c1c);
@@ -239,6 +263,10 @@ input[type="submit"]:active {
 
 .social-container {
 	padding: 10px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    
 }
 
 #option-desc {
@@ -313,4 +341,18 @@ input[type="submit"]:active {
 #passlen{
 	font-weight: bold;
 	font-size: 1.5em;
+}
+
+select{
+    background: linear-gradient(to right, var(--color-red-gradient-mid) 0%, var(--color-red-gradient-end) 100%);
+    border-radius: 10px;
+    font-family: "NorthStarHalf", "half-tone";
+    font-size: 1.2em;
+    color: #1e1e1e;
+    border: 1px solid transparent;
+    padding: 8px 12px;
+    margin: 5px;
+    background-repeat:no-repeat; 
+    background-position-x:95%; 
+    background-position-y:center;
 }

@@ -4,7 +4,7 @@ chrome.runtime.onInstalled.addListener(function () {
     chrome.storage.sync.set({
         links: []
     }, function () {
-        console.log('Linklist initialzied!');
+        console.log('Linklist initialized!');
     });
 });
 
@@ -61,7 +61,7 @@ function openSocialLink(type) {
             url: 'https://www.tryhackme.com/p/S3R43o3'
         });
     } else {
-        return
+        return;
     }
 }
 
@@ -74,7 +74,10 @@ function openNotification(message) {
     });
 }
 
-
+function changeAddonIcon(iconPath) {
+    chrome.action.setIcon({ path: iconPath });
+    console.log("Icon updated");
+}
 
 // listen on events from popup window
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -88,6 +91,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         openSocialLink(request.link);
     } else if (request.action === 'notify') {
         openNotification(request.link);
+    } else if (request.action === 'changeIcon') {
+        changeAddonIcon(request.link);
     }
-
 });
