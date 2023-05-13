@@ -18,7 +18,7 @@
           <input type="button" id="clear-list-btn" value="Clear" />
           <input type="button" id="add-tab-btn" value="Add Tab" />
           <input type="button" id="option-btn" value="Help" />
-          <input type="button" id="notify-btn" value="?" />
+          <input type="button" id="notify-btn" value="Pass" />
         </div>
         <!-- LINK CONTAINER -->
         <form id="addLinkForm">
@@ -34,7 +34,7 @@
       <!-- passwordgenerator section -->
       <div hidden id="generator" class="passwordgenerator">
         <div class="password-options">
-          <h2>Password Options</h2>
+          <h2>Password Generator</h2>
           <hr>
           <br>
           <label for="numbers">Include Numbers:</label>
@@ -43,9 +43,9 @@
           <input type="checkbox" id="special-characters" /><br />
           <br>
           <label for="password-length">Password Length:</label><br>
-          <p id="passlen">0</p>
+          <p class="passlen" id="passlen"></p>
           <input type="range" id="password-length" min="5" max="40" value="30"/><br />
-          <p style="font-size: 1.3em;color: #00ff41;" id="newpass"><b>Your new password spawns here</b></p>
+          <p style="font-size: 1.3em;color: #00ff41;" id="newpass"><b>Your new password spawn here</b></p>
           <br>
           <button id="gen-pass-btn" class="button-with-icon">
             <img src="../assets/img/key-solid.svg" alt="generate Icon" class="icon" style="fill: black;">
