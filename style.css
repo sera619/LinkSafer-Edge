@@ -1,0 +1,252 @@
+:root {
+    --color-red: #ff0000;
+    --color-green: #00ff41;
+    --color-red-shadow: rgba(255, 0, 0, 0.925);
+    --color-green-shadow: rgba(0, 255, 65, 0.9);
+    --color-red-gradient-start: #ff000009;
+    --color-red-gradient-mid: #ff00002d;
+    --color-red-gradient-end: #ff0000;
+    --color-green-gradient-start: #00ff4009;
+    --color-green-gradient-mid: #00ff402d;
+    --color-green-gradient-end: #00ff41;
+}
+
+@font-face {
+    font-family: "NorthStarHalf";
+    src: url(/assets/fonts/northstarhalf.ttf);
+}
+
+body {
+    background: linear-gradient(to bottom right, #2c2c2c, #1c1c1c);
+    color: var(--color-red);
+    font-family: "Courier New", Courier, monospace;
+    position: relative;
+    padding: 10px;
+    height: 500px;
+    display: block;
+    min-width: 450px;
+    overflow: hidden;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+}
+
+body.green-theme {
+    background: linear-gradient(to bottom right, #2c2c2c, #1c1c1c);
+    color: var(--color-green);
+    font-family: "Courier New", Courier, monospace;
+    position: relative;
+    padding: 10px;
+    height: 500px;
+    display: block;
+    min-width: 450px;
+    overflow: hidden;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+    transform: translateX(-50%) translateY(-50%) rotate(30deg) skewX(30deg);
+    transition: transform 0.5s ease-in-out;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    right: 3px;
+    width: 100vw;
+    padding: 0;
+    text-align: center;
+    color: #ff000071;
+    font-size: 0.9em;
+}
+
+h1,
+h2,
+h3,
+.green-theme {
+    font-family: "NorthStarHalf", "half-tone";
+    letter-spacing: 0.8rem;
+    margin: 0;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #181818;
+}
+
+h1,
+h2,
+h3 {
+    text-shadow: 0 0 10px var(--color-red-shadow);
+}
+
+h1.green-theme,
+h2.green-theme,
+h3.green-theme {
+    text-shadow: 0 0 10px var(--color-green-shadow);
+}
+
+h1,
+h2,
+h3,
+.green-theme {
+    font-size: 2.2rem;
+}
+
+h2,
+h3 {
+    font-size: 1.8rem;
+}
+
+h3 {
+    font-size: 1.2rem;
+}
+
+hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(to right, var(--color-red-gradient-start) 0%, var(--color-red-gradient-mid) 75%, var(--color-red-gradient-end) 100%);
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+hr::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, var(--color-red-gradient-start) 0%, var(--color-red-gradient-mid) 75%, var(--color-red-gradient-end) 100%);
+    animation: move 4s linear infinite;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-content: space-evenly;
+}
+
+li {
+    margin-bottom: 5px;
+    font-size: 18px;
+    overflow: hidden;
+}
+
+input[type="text"] {
+    background-color: #3a3a3a;
+    color: var(--color-red);
+    text-align: center;
+    border: none;
+    padding: 5px;
+    width: 70%;
+}
+
+a:visited {
+    color: var(--color-red);
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-red);
+}
+
+#addLinkForm {
+    width: 100%;
+}
+
+.btn-box {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: inline;
+}
+
+.list-container {
+    width: 90%;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+}
+
+.delete-btn {
+    position: absolute;
+    right: 45px;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    background: transparent;
+    border-radius: 10px;
+    border: 1px solid #ff00004d;
+    color: #ff00004d;
+}
+
+.delete-btn:hover {
+    border: 1px solid #ff0000;
+    color: var(--color-red);
+    transition: 0.5s;
+}
+
+input[type="button"],
+input[type="submit"] {
+    background: linear-gradient(to right, var(--color-red-gradient-mid) 0%, var(--color-red-gradient-end) 100%);
+    border-radius: 10px;
+    font-family: "NorthStarHalf", "half-tone";
+    font-size: 1.2em;
+    color: #1e1e1e;
+    border: 1px solid transparent;
+    padding: 8px 12px;
+    margin: 5px;
+    transition: all 0.3s ease-in-out;
+    transform: scale(1) rotate(0deg);
+}
+
+input[type="button"]:hover,
+input[type="submit"]:hover {
+    text-shadow: 0 0 10px var(--color-red-shadow);
+    border: 1px solid var(--color-red-shadow);
+    background-position: right center;
+    transition: all 0.3s ease-in-out;
+    transform: scale(1.1) rotate(10deg);
+}
+
+input[type="button"]:active,
+input[type="submit"]:active {
+    transform: scale(0.9) rotate(-10deg);
+}
+
+
+.social-container {
+	display: block;
+	height: fit-content;
+	width: fit-content;
+	margin: 10px;
+}
+
+#option-desc {
+    font-size: 1.2em;
+    word-wrap: break-word;
+}
+
+.mainsection {
+    width: 85%;
+}
+
+@keyframes move {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
