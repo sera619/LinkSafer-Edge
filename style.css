@@ -208,7 +208,7 @@ a {
 }
 
 .list-container {
-    width: 90%;
+    width: 85%;
     align-items: center;
     text-align: center;
     justify-content: space-between;
@@ -266,12 +266,13 @@ input[type="submit"]:active {
     justify-content: center;
     align-items: center;
     display: flex;
-    
+    max-width: 70%;
 }
 
 #option-desc {
     font-size: 1.2em;
     word-wrap: break-word;
+    width: 85%;
 }
 
 .mainsection {

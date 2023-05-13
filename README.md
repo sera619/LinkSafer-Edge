@@ -59,9 +59,3 @@ This extension was developed and designed by S3R43o3 and AI.
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-
-## Release Notes
-
-- Version: 1.4.1
-- Date: May 13, 2023
-- Changes: The user interface has been optimized, and various bugs have been fixed.

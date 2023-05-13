@@ -62,7 +62,7 @@ function addCurrentTab() {
 }
 
 function shortenLink(link) {
-	var maxLength = 30;
+	var maxLength = 20;
 	if (link.length > maxLength) {
 		return link.substring(0, maxLength - 3) + "...";
 	} else {
@@ -79,7 +79,7 @@ function openLink(event) {
 
 function openOptionsPage() {
 	chrome.runtime.sendMessage({
-		action: "openOption",
+		action: "openOption", link:null
 	});
 }
 
@@ -158,10 +158,11 @@ function myConfirm(message) {
 	var yesButton = document.createElement("button");
 	yesButton.innerHTML = "Okay";
 	yesButton.className = "button-with-icon";
-	yesButton.onclick = function () {
+	yesButton.addEventListener("click", function(event){
+		event.preventDefault();
 		document.body.removeChild(modal);
 		return true;
-	};
+	})
 
 	var br = document.createElement("br");
 	var br2 = document.createElement("br");
@@ -171,10 +172,11 @@ function myConfirm(message) {
 	var noButton = document.createElement("button");
 	noButton.innerHTML = "Cancel";
 	noButton.className = "button-with-icon";
-	noButton.onclick = function () {
+	noButton.addEventListener("click",function (event) {
+		event.preventDefault();
 		document.body.removeChild(modal);
 		return false;
-	};
+	})
 
 	buttonContainer.appendChild(yesButton);
 	buttonContainer.appendChild(br2);
@@ -244,10 +246,10 @@ function getExtensionVersion() {
 
 
 // init popup and eventhandler
-chrome.runtime.sendMessage({
-	action: 'loadIcon'
-});
 document.addEventListener("DOMContentLoaded", function () {
+	chrome.runtime.sendMessage({
+		action: 'loadIcon'
+	});
 	showLinks();
 	var addLinkForm = document.getElementById("addLinkForm");
 	addLinkForm.addEventListener("submit", function (event) {

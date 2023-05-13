@@ -1,12 +1,12 @@
 // Hintergrundseite
 const ICON_DEFAULT_PATHS = {
-    "16": "/assets/img/icons/normal/icon16.png",
-    "32": "/assets/img/icons/normal/icon32.png",
-    "48": "/assets/img/icons/normal/icon48.png",
-    "64": "/assets/img/icons/normal/icon64.png",
-    "96": "/assets/img/icons/normal/icon96.png",
-    "128": "/assets/img/icons/normal/icon128.png",
-    "256": "/assets/img/icons/normal/icon256.png"
+    "16":chrome.runtime.getURL("/assets/img/icons/normal/icon16.png"),
+    "32":chrome.runtime.getURL("/assets/img/icons/normal/icon32.png"),
+    "48":chrome.runtime.getURL("/assets/img/icons/normal/icon48.png"),
+    "64":chrome.runtime.getURL("/assets/img/icons/normal/icon64.png"),
+    "96":chrome.runtime.getURL("/assets/img/icons/normal/icon96.png"),
+    "128":chrome.runtime.getURL( "/assets/img/icons/normal/icon128.png"),
+    "256":chrome.runtime.getURL("/assets/img/icons/normal/icon256.png")
 }
 chrome.runtime.onInstalled.addListener(function () {
     // Initialisiere den Speicher
@@ -77,34 +77,40 @@ function openOptionsPage() {
 }
 
 function openSocialLink(type) {
-    if (type === "github") {
-        chrome.tabs.create({
-            url: 'https://www.github.com/sera619'
-        });
-    } else if (type === "codepen") {
-        chrome.tabs.create({
-            url: 'https://www.codepen.io/sera619'
-        });
-    } else if (type === "youtube") {
-        chrome.tabs.create({
-            url: 'https://www.youtube.com/@S3R43o3'
-        });
-    } else if (type === "thm") {
-        chrome.tabs.create({
-            url: 'https://www.tryhackme.com/p/S3R43o3'
-        });
+    const validTypes = ["github", "codepen", "youtube", "thm"];
+
+    if (validTypes.includes(type)) {
+        let url;
+        if (type === "github") {
+            url = 'https://www.github.com/sera619';
+        } else if (type === "codepen") {
+            url = 'https://www.codepen.io/sera619';
+        } else if (type === "youtube") {
+            url = 'https://www.youtube.com/@S3R43o3';
+        } else if (type === "thm") {
+            url = 'https://www.tryhackme.com/p/S3R43o3';
+        }
+
+        chrome.tabs.create({ url });
     } else {
-        return;
+        console.error("Invalid social link type:", type);
     }
 }
-
 function openNotification(message) {
+    // validate and clear message for injections
+    const validMessage = sanitizeMessage(message); 
     chrome.notifications.create({
         type: 'basic',
-        iconUrl: '/assets/img/icon64.png',
+        iconUrl: chrome.runtime.getURL('/assets/img/icons/hacker/icon64.png'),
         title: 'Benachrichtigung',
-        message: message
+        message: validMessage
     });
+}
+
+function sanitizeMessage(message) {
+    const injectionRegex = /<script\b[^>]*>([\s\S]*?)<\/script>/gi;
+    const sanitizedMessage = message.replace(injectionRegex, '');    
+    return sanitizedMessage;
 }
 
 function changeAddonIcon(iconPath) {
@@ -113,6 +119,7 @@ function changeAddonIcon(iconPath) {
     });
     console.log("Icon updated");
 }
+
 
 // listen on events from popup window
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
