@@ -30,7 +30,7 @@ If you prefer to install the extension manually, follow these steps:
     <br>
 
 - ![Addon Preview](assets/img/addon_preview.png)
-- ![Option Preview](assets/img/addon_preview.png)
+- ![Option Preview](assets/img/options_preview.png)
 - ![Password Generator Preview](assets/img/passgen_preview.png)
 
 </details>
