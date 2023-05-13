@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
         chrome.runtime.sendMessage({action: "openSocial", link: "thm"});
     })
-    const VERSION = "1.4.1";
+    const VERSION = "1.5.8";
     var versiontext = document.getElementById("version");
     versiontext.innerText = VERSION;
 });

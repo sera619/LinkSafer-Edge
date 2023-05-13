@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Link Safer",
     "author": "S3R43o3",
-    "version": "1.4.1",
+    "version": "1.5.8",
     "icons": {
         "16": "assets/img/icon16.png",
         "32": "assets/img/icon32.png",
@@ -12,10 +12,11 @@
         "256": "assets/img/icon256.png"
     },
     "options_page": "src/options.html",
-    "description": "Link Safer ist eine Erweiterung für den Microsoft Edge-Browser, die es Benutzern ermöglicht, Links und Notizen sicher zu speichern.",
+    "description": "Link Safer is an extension for the Microsoft Edge browser that allows users to save links and notes securely.",
     "permissions": [
         "storage",
-        "tabs"
+        "tabs",
+        "notifications"
     ],
     "background": {
         "service_worker": "background.js"

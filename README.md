@@ -10,22 +10,31 @@ A Firefox version is also available on the [Firefoxstore](https://addons.mozilla
 
 If you want to install the addon manually follow these steps:
 
-
 <details>
     <summary>Manual installation</summary>
-<br>
+    <br>
 
-> - Go to the [release section] and download the latest release.
->
->
->
->
->
-
+> - Go to the [release section](https://github.com/sera619/EdgeAddon/releases) and download the latest release.
+> - Open your browser and navigate to browser-/extension-settings
+> - look for the option to install a extension from a file
+> - once you get this select the path to the downloaded zip
+> - click install and you should be ready to go
 
 </details>
 
 ## Usage
+
+<details>
+    <summary>Scrennshots</summary>
+    <br>
+
+> - ![Addon Preview](assets/img/addon_preview.png)
+>
+> - ![Option Preview](assets/img/options_preview.png)
+
+</details>
+<br>
+
 
 Once the extension is installed, users can access it through the browser menu. The extension displays a list of saved links and notes. Users can add new links by entering the URL and clicking on "Add". Current tabs can also be added as a link by clicking on the "Add Current Tab" button.
 

@@ -31,9 +31,9 @@ body {
     text-align: center;
 }
 
-body.green-theme {
+.modal{
     background: linear-gradient(to bottom right, #2c2c2c, #1c1c1c);
-    color: var(--color-green);
+    color: var(--color-red);
     font-family: "Courier New", Courier, monospace;
     position: relative;
     padding: 10px;
@@ -44,6 +44,18 @@ body.green-theme {
     justify-items: center;
     align-items: center;
     text-align: center;
+}
+
+.modal::before{
+	content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+    transform: translateX(-50%) translateY(-50%) rotate(30deg) skewX(30deg);
+    transition: transform 0.5s ease-in-out;
 }
 
 body::before {
@@ -226,10 +238,7 @@ input[type="submit"]:active {
 
 
 .social-container {
-	display: block;
-	height: fit-content;
-	width: fit-content;
-	margin: 10px;
+	padding: 10px;
 }
 
 #option-desc {
@@ -249,4 +258,54 @@ input[type="submit"]:active {
     100% {
         transform: translateX(100%);
     }
+}
+
+.button-with-icon {
+    background: linear-gradient(to right, var(--color-red-gradient-mid) 0%, var(--color-red-gradient-end) 100%);
+    border-radius: 10px;
+    font-family: "NorthStarHalf", "half-tone";
+    font-size: 1.2em;
+    color: #1e1e1e;
+    border: 1px solid transparent;
+    padding: 8px 12px;
+    margin: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+    transition: all 0.3s ease-in-out;
+    transform: scale(1) rotate(0deg);
+    position: relative;
+    overflow: hidden;
+}
+
+.button-with-icon:hover {
+    text-shadow: 0 0 10px var(--color-red-shadow);
+    border: 1px solid var(--color-red-shadow);
+    background-position: right center;
+    transition: all 0.3s ease-in-out;
+    transform: scale(1.1) rotate(10deg);
+}
+
+.button-with-icon:active {
+    transform: scale(0.9) rotate(-10deg);
+}
+
+.button-with-icon svg {
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.button-with-icon span {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.icon {
+    width: 1.1em;
+    height: 1.1em;
+    fill: currentColor;
+    vertical-align: middle;
+	padding-right: 8px;
 }

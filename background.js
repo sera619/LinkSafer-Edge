@@ -38,24 +38,43 @@ function removeLink(link) {
 }
 
 function openOptionsPage() {
-    chrome.tabs.create({url: 'src/options.html'});
+    chrome.tabs.create({
+        url: 'src/options.html'
+    });
 }
 
-function openSocialLink(type){
-    if (type === "github"){
-        chrome.tabs.create({url: 'https://www.github.com/sera619'});
-    }
-    else if (type === "codepen"){
-        chrome.tabs.create({url: 'https://www.codepen.io/sera619'});
-    }
-    else if (type === "youtube"){
-        chrome.tabs.create({url: 'https://www.youtube.com/@S3R43o3'});
-    }else if (type === "thm"){
-        chrome.tabs.create({url: 'https://www.tryhackme.com/p/S3R43o3'})
+function openSocialLink(type) {
+    if (type === "github") {
+        chrome.tabs.create({
+            url: 'https://www.github.com/sera619'
+        });
+    } else if (type === "codepen") {
+        chrome.tabs.create({
+            url: 'https://www.codepen.io/sera619'
+        });
+    } else if (type === "youtube") {
+        chrome.tabs.create({
+            url: 'https://www.youtube.com/@S3R43o3'
+        });
+    } else if (type === "thm") {
+        chrome.tabs.create({
+            url: 'https://www.tryhackme.com/p/S3R43o3'
+        });
     } else {
         return
     }
 }
+
+function openNotification(message) {
+    chrome.notifications.create({
+        type: 'basic',
+        iconUrl: '/assets/img/icon64.png',
+        title: 'Benachrichtigung',
+        message: message
+    });
+}
+
+
 
 // listen on events from popup window
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -63,9 +82,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         addLink(request.link);
     } else if (request.action === 'removeLink') {
         removeLink(request.link);
-    } else if (request.action === 'openOption'){
+    } else if (request.action === 'openOption') {
         openOptionsPage();
-    } else if (request.action === 'openSocial'){
+    } else if (request.action === 'openSocial') {
         openSocialLink(request.link);
+    } else if (request.action === 'notify') {
+        openNotification(request.link);
     }
+
 });
