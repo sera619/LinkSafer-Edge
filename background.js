@@ -1,22 +1,79 @@
-// Hintergrundseite
+// Hintergrundscript
 const ICON_DEFAULT_PATHS = {
-    "16":chrome.runtime.getURL("/assets/img/icons/normal/icon16.png"),
-    "32":chrome.runtime.getURL("/assets/img/icons/normal/icon32.png"),
-    "48":chrome.runtime.getURL("/assets/img/icons/normal/icon48.png"),
-    "64":chrome.runtime.getURL("/assets/img/icons/normal/icon64.png"),
-    "96":chrome.runtime.getURL("/assets/img/icons/normal/icon96.png"),
-    "128":chrome.runtime.getURL( "/assets/img/icons/normal/icon128.png"),
-    "256":chrome.runtime.getURL("/assets/img/icons/normal/icon256.png")
+    "16": chrome.runtime.getURL("/assets/img/icons/normal/icon16.png"),
+    "32": chrome.runtime.getURL("/assets/img/icons/normal/icon32.png"),
+    "48": chrome.runtime.getURL("/assets/img/icons/normal/icon48.png"),
+    "64": chrome.runtime.getURL("/assets/img/icons/normal/icon64.png"),
+    "96": chrome.runtime.getURL("/assets/img/icons/normal/icon96.png"),
+    "128": chrome.runtime.getURL("/assets/img/icons/normal/icon128.png"),
+    "256": chrome.runtime.getURL("/assets/img/icons/normal/icon256.png")
+};
+
+const ICON_BINARY_PATHS = {
+    "16": chrome.runtime.getURL("/assets/img/icons/binarycode/icon16.png"),
+    "32": chrome.runtime.getURL("/assets/img/icons/binarycode/icon32.png"),
+    "48": chrome.runtime.getURL("/assets/img/icons/binarycode/icon48.png"),
+    "64": chrome.runtime.getURL("/assets/img/icons/binarycode/icon64.png"),
+    "96": chrome.runtime.getURL("/assets/img/icons/binarycode/icon96.png"),
+    "128": chrome.runtime.getURL("/assets/img/icons/binarycode/icon128.png"),
+    "256": chrome.runtime.getURL("/assets/img/icons/binarycode/icon256.png")
+}
+const ICON_WEB_KEY_PATHS = {
+    "16": chrome.runtime.getURL("/assets/img/icons/web-security/icon16.png"),
+    "32": chrome.runtime.getURL("/assets/img/icons/web-security/icon32.png"),
+    "48": chrome.runtime.getURL("/assets/img/icons/web-security/icon48.png"),
+    "64": chrome.runtime.getURL("/assets/img/icons/web-security/icon64.png"),
+    "96": chrome.runtime.getURL("/assets/img/icons/web-security/icon96.png"),
+    "128": chrome.runtime.getURL("/assets/img/icons/web-security/icon128.png"),
+    "256": chrome.runtime.getURL("/assets/img/icons/web-security/icon256.png")
+}
+const ICON_HACKER_PATHS = {
+    "16": chrome.runtime.getURL("/assets/img/icons/hacker/icon16.png"),
+    "32": chrome.runtime.getURL("/assets/img/icons/hacker/icon32.png"),
+    "48": chrome.runtime.getURL("/assets/img/icons/hacker/icon48.png"),
+    "64": chrome.runtime.getURL("/assets/img/icons/hacker/icon64.png"),
+    "96": chrome.runtime.getURL("/assets/img/icons/hacker/icon96.png"),
+    "128": chrome.runtime.getURL("/assets/img/icons/hacker/icon128.png"),
+    "256": chrome.runtime.getURL("/assets/img/icons/hacker/icon256.png")
+}
+const ICON_SMART_KEY_PATHS = {
+    "16": chrome.runtime.getURL("/assets/img/icons/smart-key/icon16.png"),
+    "32": chrome.runtime.getURL("/assets/img/icons/smart-key/icon32.png"),
+    "48": chrome.runtime.getURL("/assets/img/icons/smart-key/icon48.png"),
+    "64": chrome.runtime.getURL("/assets/img/icons/smart-key/icon64.png"),
+    "96": chrome.runtime.getURL("/assets/img/icons/smart-key/icon96.png"),
+    "128": chrome.runtime.getURL("/assets/img/icons/smart-key/icon128.png"),
+    "256": chrome.runtime.getURL("/assets/img/icons/smart-key/icon256.png")
 }
 chrome.runtime.onInstalled.addListener(function () {
     // Initialisiere den Speicher
     chrome.storage.sync.set({
-        links: [],
-        iconPath: ICON_DEFAULT_PATHS
-    }, function () {
-        console.log('Linklist initialized!');
-    });
+            links: [],
+            iconPath: ICON_DEFAULT_PATHS
+        },
+        function () {
+            console.log('Linklist initialized!');
+        });
 });
+
+chrome.runtime.onStartup.addListener(function () {
+    loadAddonIcon();
+});
+
+
+
+// Funktion zum Laden des gespeicherten Add-On-Icons
+function loadAddonIcon() {
+    chrome.storage.sync.get("iconPath", function (data) {
+        const iconPath = data.iconPath;
+        if (iconPath) {
+            changeAddonIcon(iconPath);
+            savedIconPath = iconPath;
+            console.log("Addon icon loaded:", iconPath);
+        }
+    });
+}
+
 
 // add link to browser storage
 function addLink(link) {
@@ -91,14 +148,17 @@ function openSocialLink(type) {
             url = 'https://www.tryhackme.com/p/S3R43o3';
         }
 
-        chrome.tabs.create({ url });
+        chrome.tabs.create({
+            url
+        });
     } else {
         console.error("Invalid social link type:", type);
     }
 }
+
 function openNotification(message) {
     // validate and clear message for injections
-    const validMessage = sanitizeMessage(message); 
+    const validMessage = sanitizeMessage(message);
     chrome.notifications.create({
         type: 'basic',
         iconUrl: chrome.runtime.getURL('/assets/img/icons/hacker/icon64.png'),
@@ -109,17 +169,41 @@ function openNotification(message) {
 
 function sanitizeMessage(message) {
     const injectionRegex = /<script\b[^>]*>([\s\S]*?)<\/script>/gi;
-    const sanitizedMessage = message.replace(injectionRegex, '');    
+    const sanitizedMessage = message.replace(injectionRegex, '');
     return sanitizedMessage;
 }
 
 function changeAddonIcon(iconPath) {
-    chrome.action.setIcon({
-        path: iconPath
-    });
-    console.log("Icon updated");
+    var final_path = null;
+    switch (iconPath) {
+        case "normal":
+            final_path = ICON_DEFAULT_PATHS;
+            break;
+        case "binary":
+            final_path = ICON_BINARY_PATHS;
+            break;
+        case "web-key":
+            final_path = ICON_WEB_KEY_PATHS;
+            break;
+        case "smart-key":
+            final_path = ICON_SMART_KEY_PATHS;
+            break;
+        case "hacker":
+            final_path = ICON_HACKER_PATHS;
+            break;
+        default:
+            break;
+    }
+    if (final_path=== null){
+        console.log("icon not updated");
+        return;
+    }else{
+        console.log("Icon updated");
+        chrome.action.setIcon({
+            path: final_path
+        });
+    }
 }
-
 
 // listen on events from popup window
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -136,7 +220,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     } else if (request.action === 'changeIcon') {
         changeAddonIcon(request.link);
         saveAddonIcon(request.link);
-    }else if (request.action === 'loadIcon') {
+    } else if (request.action === 'loadIcon') {
         loadAddonIcon();
     }
 });

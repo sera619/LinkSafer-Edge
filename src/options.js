@@ -6,7 +6,8 @@ const ICON_DEFAULT_PATHS = {
     "96": chrome.runtime.getURL("/assets/img/icons/normal/icon96.png"),
     "128": chrome.runtime.getURL("/assets/img/icons/normal/icon128.png"),
     "256": chrome.runtime.getURL("/assets/img/icons/normal/icon256.png")
-}
+};
+
 const ICON_BINARY_PATHS = {
     "16": chrome.runtime.getURL("/assets/img/icons/binarycode/icon16.png"),
     "32": chrome.runtime.getURL("/assets/img/icons/binarycode/icon32.png"),
@@ -43,43 +44,11 @@ const ICON_SMART_KEY_PATHS = {
     "128": chrome.runtime.getURL("/assets/img/icons/smart-key/icon128.png"),
     "256": chrome.runtime.getURL("/assets/img/icons/smart-key/icon256.png")
 }
-
-
 function changeIcon(icontype) {
-    switch (icontype) {
-        case "normal":
-            chrome.runtime.sendMessage({
-                action: 'changeIcon',
-                link: ICON_DEFAULT_PATHS
-            });
-            break;
-        case "binary":
-            chrome.runtime.sendMessage({
-                action: "changeIcon",
-                link: ICON_BINARY_PATHS
-            });
-            break;
-        case "web-key":
-            chrome.runtime.sendMessage({
-                action: "changeIcon",
-                link: ICON_WEB_KEY_PATHS
-            });
-            break;
-        case "smart-key":
-            chrome.runtime.sendMessage({
-                action: "changeIcon",
-                link: ICON_SMART_KEY_PATHS
-            });
-            break;
-        case "hacker":
-            chrome.runtime.sendMessage({
-                action: "changeIcon",
-                link: ICON_HACKER_PATHS
-            });
-            break;
-        default:
-            break;
-    }
+    chrome.runtime.sendMessage({
+        action: 'changeIcon',
+        link: icontype
+    });
 }
 
 function changePreviewIcon(icontype) {
@@ -144,6 +113,17 @@ function getSavedIconPath(callback) {
 var savedIconPath;
 
 document.addEventListener('DOMContentLoaded', function () {
+        // Event Listener für Farbschema-Änderung
+    const colorSchemeBtn = document.getElementById("change-scheme-btn");
+
+
+    const root = document.documentElement;
+    colorSchemeBtn.addEventListener("change", function(event) {
+        event.preventDefault();
+        root.setAttribute("data-color-scheme", "light");
+
+    });
+
     var githubBtn = document.getElementById("social-github");
     githubBtn.addEventListener('click', function (event) {
         event.preventDefault();

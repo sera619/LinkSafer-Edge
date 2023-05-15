@@ -9,6 +9,17 @@
     --color-green-gradient-start: #00ff4009;
     --color-green-gradient-mid: #00ff402d;
     --color-green-gradient-end: #00ff41;
+
+    --color-primary: var(--color-red);
+    --color-primary-shadow: var(--color-red-shadow);
+    --color-gradient-start: var(--color-red-gradient-start);
+    --color-gradient-mid: var(--color-red-gradient-mid);
+    --color-gradient-end: var(--color-red-gradient-end);
+    --color-secondary: var(--color-green);
+    --color-secondary-shadow: var(--color-green-shadow);
+    --color-secondary-gradient-start: var(--color-green-gradient-start);
+    --color-secondary-gradient-mid: var(--color-green-gradient-mid);
+    --color-secondary-gradient-end: var(--color-green-gradient-end);
 }
 
 @font-face {
@@ -18,7 +29,7 @@
 
 body {
     background: linear-gradient(to bottom right, #2c2c2c, #1c1c1c);
-    color: var(--color-red);
+    color: var(--color-primary);
     font-family: "Courier New", Courier, monospace;
     position: relative;
     padding: 10px;
@@ -57,7 +68,7 @@ body.optionbody::before {
 
 .modal{
     background: linear-gradient(to bottom right, #2c2c2c, #1c1c1c);
-    color: var(--color-red);
+    color: var(--color-primary);
     font-family: "Courier New", Courier, monospace;
     position: relative;
     padding: 10px;
@@ -148,7 +159,8 @@ h3 {
 hr {
     border: none;
     height: 2px;
-    background: linear-gradient(to right, var(--color-red-gradient-start) 0%, var(--color-red-gradient-mid) 75%, var(--color-red-gradient-end) 100%);
+    background: linear-gradient(to right, var(--color-gradient-start) 0%, var(--color-gradient-mid) 75%, var(--color-gradient-end) 100%);
+
     margin: 20px 0;
     position: relative;
     overflow: hidden;
@@ -161,7 +173,8 @@ hr::before {
     left: 0;
     width: 50%;
     height: 100%;
-    background: linear-gradient(to right, var(--color-red-gradient-start) 0%, var(--color-red-gradient-mid) 75%, var(--color-red-gradient-end) 100%);
+    background: linear-gradient(to right, var(--color-gradient-start) 0%, var(--color-gradient-mid) 75%, var(--color-gradient-end) 100%);
+ 
     animation: move 4s linear infinite;
 }
 
@@ -234,7 +247,7 @@ a {
 
 input[type="button"],
 input[type="submit"] {
-    background: linear-gradient(to right, var(--color-red-gradient-mid) 0%, var(--color-red-gradient-end) 100%);
+    background: linear-gradient(to right, var(--color-gradient-mid) 0%, var(--color-gradient-end) 100%);
     border-radius: 10px;
     font-family: "NorthStarHalf", "half-tone";
     font-size: 1.2em;
@@ -290,7 +303,7 @@ input[type="submit"]:active {
 }
 
 .button-with-icon {
-    background: linear-gradient(to right, var(--color-red-gradient-mid) 0%, var(--color-red-gradient-end) 100%);
+    background: linear-gradient(to right, var(--color-gradient-mid) 0%, var(--color-gradient-end) 100%);
     border-radius: 10px;
     font-family: "NorthStarHalf", "half-tone";
     font-size: 1.2em;
@@ -308,8 +321,8 @@ input[type="submit"]:active {
 }
 
 .button-with-icon:hover {
-    text-shadow: 0 0 10px var(--color-red-shadow);
-    border: 1px solid var(--color-red-shadow);
+    text-shadow: 0 0 10px var(--color-primary-shadow);
+    border: 1px solid var(--color-primary-shadow);
     background-position: right center;
     transition: all 0.3s ease-in-out;
     transform: scale(1.1) rotate(10deg);

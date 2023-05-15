@@ -9,8 +9,8 @@ function showLinks() {
 			var deleteButton = document.createElement("button");
 			deleteButton.textContent = "X";
 			deleteButton.className = "delete-btn";
-			if (links[i].startsWith("http") || links[i].startsWith("https")) {
-				// Link
+			if (links[i].startsWith("http") || links[i].startsWith("https") || links[i].startsWith("chrome:") || links[i].startsWith("edge:") || links[i].startsWith("chrome-extension:")) {
+			//if (links[i].startsWith("http") || links[i].startsWith("https") || links[i].startsWith("chrome://") || links[i].startsWith("edge://")) {
 				var hyperlink = document.createElement("a");
 				hyperlink.textContent = shortenLink(links[i]);
 				hyperlink.href = links[i];
@@ -62,7 +62,7 @@ function addCurrentTab() {
 }
 
 function shortenLink(link) {
-	var maxLength = 20;
+	const maxLength = 30;
 	if (link.length > maxLength) {
 		return link.substring(0, maxLength - 3) + "...";
 	} else {
@@ -84,11 +84,11 @@ function openOptionsPage() {
 }
 
 function addLink() {
-	var newLink = document.getElementById("newLink");
+	const newLink = document.getElementById("newLink");
 	if (newLink.value === "") {
 		return;
 	}
-	var link = newLink.value;
+	const link = newLink.value;
 	newLink.value = "";
 	chrome.runtime.sendMessage({
 		action: "addLink",
@@ -247,9 +247,9 @@ function getExtensionVersion() {
 
 // init popup and eventhandler
 document.addEventListener("DOMContentLoaded", function () {
-	chrome.runtime.sendMessage({
-		action: 'loadIcon'
-	});
+
+
+
 	showLinks();
 	var addLinkForm = document.getElementById("addLinkForm");
 	addLinkForm.addEventListener("submit", function (event) {
@@ -323,3 +323,4 @@ chrome.storage.onChanged.addListener(function (changes, areaName) {
 		showLinks();
 	}
 });
+
