@@ -135,7 +135,7 @@ function showNotify() {
 	});
 }
 
-function myConfirm(message) {
+function myConfirm(message, title="Attention") {
 	var modal = document.createElement("div");
 	modal.style.display = "block";
 	modal.style.position = "fixed";
@@ -158,7 +158,8 @@ function myConfirm(message) {
 	modalContent.style.width = "80%";
 
 	var h = document.createElement("h3");
-	h.innerText = "Attention";
+	h.innerText = title;
+	
 	modalContent.appendChild(h);
 	var hr = document.createElement("hr");
 	modalContent.appendChild(hr);
@@ -267,6 +268,7 @@ async function downloadTextFile() {
 		a.href = url;
 		a.download = "links.txt";
 		a.click();
+		myConfirm("Your link & notice list successfully downloaded!", "Information");
 	});
 }
 
