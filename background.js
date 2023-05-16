@@ -1,4 +1,4 @@
-// Hintergrundscript
+
 const ICON_DEFAULT_PATHS = {
     "16": chrome.runtime.getURL("/assets/img/icons/normal/icon16.png"),
     "32": chrome.runtime.getURL("/assets/img/icons/normal/icon32.png"),
@@ -45,6 +45,8 @@ const ICON_SMART_KEY_PATHS = {
     "128": chrome.runtime.getURL("/assets/img/icons/smart-key/icon128.png"),
     "256": chrome.runtime.getURL("/assets/img/icons/smart-key/icon256.png")
 }
+
+
 chrome.runtime.onInstalled.addListener(function () {
     // Initialisiere den Speicher
     chrome.storage.sync.set({
@@ -56,13 +58,12 @@ chrome.runtime.onInstalled.addListener(function () {
         });
 });
 
+
 chrome.runtime.onStartup.addListener(function () {
     loadAddonIcon();
 });
 
 
-
-// Funktion zum Laden des gespeicherten Add-On-Icons
 function loadAddonIcon() {
     chrome.storage.sync.get("iconPath", function (data) {
         const iconPath = data.iconPath;
@@ -75,7 +76,6 @@ function loadAddonIcon() {
 }
 
 
-// add link to browser storage
 function addLink(link) {
     chrome.storage.sync.get('links', function (data) {
         var links = data.links;
@@ -88,6 +88,8 @@ function addLink(link) {
     });
 }
 
+
+
 function saveAddonIcon(iconPath) {
     chrome.storage.sync.set({
         iconPath: iconPath
@@ -97,7 +99,6 @@ function saveAddonIcon(iconPath) {
     });
 }
 
-// Funktion zum Laden des gespeicherten Add-On-Icons
 function loadAddonIcon() {
     chrome.storage.sync.get('iconPath', function (data) {
         var iconPath = data.iconPath;
@@ -194,11 +195,11 @@ function changeAddonIcon(iconPath) {
         default:
             break;
     }
-    if (final_path=== null){
-        console.log("icon not updated");
+    if (final_path === null) {
+        //console.log("icon not updated");
         return;
-    }else{
-        console.log("Icon updated");
+    } else {
+        //console.log("Icon updated");
         chrome.action.setIcon({
             path: final_path
         });

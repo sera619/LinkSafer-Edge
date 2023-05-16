@@ -250,10 +250,10 @@ input[type="submit"] {
     background: linear-gradient(to right, var(--color-gradient-mid) 0%, var(--color-gradient-end) 100%);
     border-radius: 10px;
     font-family: "NorthStarHalf", "half-tone";
-    font-size: 1.2em;
+    font-size: 1em;
     color: #1e1e1e;
     border: 1px solid transparent;
-    padding: 8px 12px;
+    padding: 6px 10px;
     margin: 5px;
     transition: all 0.3s ease-in-out;
     transform: scale(1) rotate(0deg);
@@ -306,10 +306,10 @@ input[type="submit"]:active {
     background: linear-gradient(to right, var(--color-gradient-mid) 0%, var(--color-gradient-end) 100%);
     border-radius: 10px;
     font-family: "NorthStarHalf", "half-tone";
-    font-size: 1.2em;
+    font-size: 1em;
     color: #1e1e1e;
     border: 1px solid transparent;
-    padding: 8px 12px;
+    padding: 6px 10px;
     margin: 5px;
 	display: flex;
 	align-items: center;
@@ -358,7 +358,7 @@ input[type="submit"]:active {
 }
 
 select{
-    background: linear-gradient(to right, var(--color-red-gradient-mid) 0%, var(--color-red-gradient-end) 100%);
+    background: linear-gradient(to right, var(--color-gradient-mid) 0%, var(--color-gradient-end) 100%);
     border-radius: 10px;
     font-family: "NorthStarHalf", "half-tone";
     font-size: 1.2em;

@@ -113,17 +113,12 @@ function getSavedIconPath(callback) {
 var savedIconPath;
 
 document.addEventListener('DOMContentLoaded', function () {
-        // Event Listener für Farbschema-Änderung
-    const colorSchemeBtn = document.getElementById("change-scheme-btn");
-
-
-    const root = document.documentElement;
-    colorSchemeBtn.addEventListener("change", function(event) {
-        event.preventDefault();
-        root.setAttribute("data-color-scheme", "light");
-
-    });
-
+    // const colorSchemeBtn = document.getElementById("change-scheme-btn");
+    // const root = document.documentElement;
+    // colorSchemeBtn.addEventListener("click", function(event) {
+    //     event.preventDefault();
+    //     root.setAttribute("data-color-scheme", "light");
+    // });
     var githubBtn = document.getElementById("social-github");
     githubBtn.addEventListener('click', function (event) {
         event.preventDefault();

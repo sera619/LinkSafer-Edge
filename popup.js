@@ -4,43 +4,53 @@ function showLinks() {
 		var links = data.links;
 		var linkList = document.getElementById("linkList");
 		linkList.innerHTML = "";
-		for (var i = 0; i < links.length; i++) {
-			var li = document.createElement("li");
-			var deleteButton = document.createElement("button");
-			deleteButton.textContent = "X";
-			deleteButton.className = "delete-btn";
-			if (links[i].startsWith("http") || links[i].startsWith("https") || links[i].startsWith("chrome:") || links[i].startsWith("edge:") || links[i].startsWith("chrome-extension:")) {
-			//if (links[i].startsWith("http") || links[i].startsWith("https") || links[i].startsWith("chrome://") || links[i].startsWith("edge://")) {
-				var hyperlink = document.createElement("a");
-				hyperlink.textContent = shortenLink(links[i]);
-				hyperlink.href = links[i];
-				hyperlink.addEventListener("click", openLink);
-				deleteButton.addEventListener("click", function (event) {
-					event.stopPropagation();
-					var link = event.target.nextSibling.href;
-					chrome.runtime.sendMessage({
-						action: "removeLink",
-						link: link,
+		if (links.length === 0) {
+			console.log("No links in storage");
+			return;
+		} else {
+			for (var i = 0; i < links.length; i++) {
+				var li = document.createElement("li");
+				var deleteButton = document.createElement("button");
+				deleteButton.textContent = "X";
+				deleteButton.className = "delete-btn";
+				if (
+					links[i].startsWith("http") ||
+					links[i].startsWith("https") ||
+					links[i].startsWith("chrome:") ||
+					links[i].startsWith("edge:") ||
+					links[i].startsWith("chrome-extension:")
+				) {
+					var hyperlink = document.createElement("a");
+					hyperlink.textContent = shortenLink(links[i]);
+					hyperlink.href = links[i];
+					hyperlink.addEventListener("click", openLink);
+					deleteButton.addEventListener("click", function (event) {
+						event.stopPropagation();
+						var link = event.target.nextSibling.href;
+						chrome.runtime.sendMessage({
+							action: "removeLink",
+							link: link,
+						});
 					});
-				});
-				li.appendChild(deleteButton);
-				li.appendChild(hyperlink);
-			} else {
-				// Notiz
-				var note = document.createElement("span");
-				note.textContent = links[i];
-				deleteButton.addEventListener("click", function (event) {
-					event.stopPropagation();
-					var link = event.target.nextSibling.textContent;
-					chrome.runtime.sendMessage({
-						action: "removeLink",
-						link: link,
+					li.appendChild(deleteButton);
+					li.appendChild(hyperlink);
+				} else {
+					// Notiz
+					var note = document.createElement("span");
+					note.textContent = links[i];
+					deleteButton.addEventListener("click", function (event) {
+						event.stopPropagation();
+						var link = event.target.nextSibling.textContent;
+						chrome.runtime.sendMessage({
+							action: "removeLink",
+							link: link,
+						});
 					});
-				});
-				li.appendChild(deleteButton);
-				li.appendChild(note);
+					li.appendChild(deleteButton);
+					li.appendChild(note);
+				}
+				linkList.appendChild(li);
 			}
-			linkList.appendChild(li);
 		}
 	});
 }
@@ -61,6 +71,17 @@ function addCurrentTab() {
 	);
 }
 
+function setDownloadBtnVisible(mode) {
+	const donwloadBtn = document.getElementById("downloadbtnbox");
+	if (mode === true) {
+		console.log("download button shown");
+		donwloadBtn.hidden = false;
+	} else if (mode === false) {
+		console.log("Downloadbutton hidden");
+		donwloadBtn.hidden = true;
+	}
+}
+
 function shortenLink(link) {
 	const maxLength = 30;
 	if (link.length > maxLength) {
@@ -79,7 +100,7 @@ function openLink(event) {
 
 function openOptionsPage() {
 	chrome.runtime.sendMessage({
-		action: "openOption", link:null
+		action: "openOption",
 	});
 }
 
@@ -112,10 +133,6 @@ function showNotify() {
 		action: "notify",
 		link: testmsg,
 	});
-}
-
-function showAlert(msg) {
-	alert(msg);
 }
 
 function myConfirm(message) {
@@ -158,39 +175,34 @@ function myConfirm(message) {
 	var yesButton = document.createElement("button");
 	yesButton.innerHTML = "Okay";
 	yesButton.className = "button-with-icon";
-	yesButton.addEventListener("click", function(event){
+	yesButton.addEventListener("click", function (event) {
 		event.preventDefault();
 		document.body.removeChild(modal);
 		return true;
-	})
+	});
 
 	var br = document.createElement("br");
 	var br2 = document.createElement("br");
 	var br3 = document.createElement("br");
 	modalContent.appendChild(br);
 
-	var noButton = document.createElement("button");
-	noButton.innerHTML = "Cancel";
-	noButton.className = "button-with-icon";
-	noButton.addEventListener("click",function (event) {
-		event.preventDefault();
-		document.body.removeChild(modal);
-		return false;
-	})
+	// var noButton = document.createElement("button");
+	// noButton.innerHTML = "Cancel";
+	// noButton.className = "button-with-icon";
+	// noButton.addEventListener("click", function (event) {
+	// 	event.preventDefault();
+	// 	document.body.removeChild(modal);
+	// 	return false;
+	// })
 
 	buttonContainer.appendChild(yesButton);
 	buttonContainer.appendChild(br2);
 	buttonContainer.appendChild(br3);
-
-	buttonContainer.appendChild(noButton);
-
+	//buttonContainer.appendChild(noButton);
 	modalContent.appendChild(buttonContainer);
-
 	modal.appendChild(modalContent);
-
 	document.body.appendChild(modal);
 }
-
 
 function changeDisplayFrame() {
 	var mainframe = document.getElementById("main");
@@ -199,33 +211,26 @@ function changeDisplayFrame() {
 	mainframe.toggleAttribute("hidden");
 }
 
-let generatedPassword = '';
+let generatedPassword = "";
 
 function generatePassword() {
-	const numbers = '0123456789';
-	const specialCharacters = '!@#$%^&*()_+';
-	const lowerCaseLetters = 'abcdefghijklmnopqrstuvwxyz';
+	const numbers = "0123456789";
+	const specialCharacters = "!@#$%^&*()_+";
+	const lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
 	const upperCaseLetters = lowerCaseLetters.toUpperCase();
-
 	let characterSet = lowerCaseLetters + upperCaseLetters;
-
-	if (document.getElementById('numbers').checked) {
+	if (document.getElementById("numbers").checked) {
 		characterSet += numbers;
 	}
-
-	if (document.getElementById('special-characters').checked) {
+	if (document.getElementById("special-characters").checked) {
 		characterSet += specialCharacters;
 	}
-
-	const passwordLength = document.getElementById('password-length').value;
-
-	let password = '';
-
+	const passwordLength = document.getElementById("password-length").value;
+	let password = "";
 	for (let i = 0; i < passwordLength; i++) {
 		const randomIndex = Math.floor(Math.random() * characterSet.length);
 		password += characterSet[randomIndex];
 	}
-
 	var newpass = document.getElementById("newpass");
 	newpass.innerText = password;
 	generatedPassword = password;
@@ -244,13 +249,31 @@ function getExtensionVersion() {
 	return version;
 }
 
+async function downloadTextFile() {
+	chrome.storage.sync.get("links", function (data) {
+		var links = data.links;
+		if (links.length === 0) {
+			myConfirm(
+				"Cannot download empy list! Please add a URL or a notice to list and try again!"
+			);
+			return;
+		}
+		const text = links.join("\n");
+		const blob = new Blob([text], {
+			type: "text/plain"
+		});
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement("a");
+		a.href = url;
+		a.download = "links.txt";
+		a.click();
+	});
+}
 
 // init popup and eventhandler
 document.addEventListener("DOMContentLoaded", function () {
-
-
-
 	showLinks();
+	setDownloadBtnVisible(true);
 	var addLinkForm = document.getElementById("addLinkForm");
 	addLinkForm.addEventListener("submit", function (event) {
 		event.preventDefault();
@@ -287,34 +310,39 @@ document.addEventListener("DOMContentLoaded", function () {
 	passlenslider.addEventListener("input", function (event) {
 		event.preventDefault();
 		passsizetext.innerHTML = passlenslider.value;
-	})
+	});
 
 	var genpassButton = document.getElementById("gen-pass-btn");
 	genpassButton.addEventListener("click", function (event) {
 		event.preventDefault();
 		generatePassword();
-	})
+	});
 
 	var copyPassButton = document.getElementById("copy-pass-btn");
 	copyPassButton.addEventListener("click", function (event) {
 		event.preventDefault();
 		copyPasswordToClipboard();
-	})
+	});
 
 	var backButton = document.getElementById("back-btn");
 	backButton.addEventListener("click", function (event) {
 		event.preventDefault();
 		changeDisplayFrame();
-	})
+	});
 
+	const donwloadBtn = document.getElementById("download-list-btn");
+	donwloadBtn.addEventListener("click", function (event) {
+		event.preventDefault();
+		downloadTextFile();
+	});
 	const VERSIONNUM = getExtensionVersion();
 	var version =
 		"v" + VERSIONNUM + "\nDevelopment & Design 2022-2023 © S3R43o3 & AI";
 	var versiontext = document.getElementById("version-text");
 	versiontext.innerText = version;
 	chrome.runtime.sendMessage({
-		action: 'loadIcon'
-	})
+		action: "loadIcon",
+	});
 });
 
 // event listerner @ browser storage
@@ -323,4 +351,3 @@ chrome.storage.onChanged.addListener(function (changes, areaName) {
 		showLinks();
 	}
 });
-
