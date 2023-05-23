@@ -1,59 +1,78 @@
 // Show all saved notice and hyperlinks
 function showLinks() {
-	chrome.storage.sync.get("links", function (data) {
-		var links = data.links;
-		var linkList = document.getElementById("linkList");
-		linkList.innerHTML = "";
-		if (links.length === 0) {
-			console.log("No links in storage");
-			return;
-		} else {
-			for (var i = 0; i < links.length; i++) {
-				var li = document.createElement("li");
-				var deleteButton = document.createElement("button");
-				deleteButton.textContent = "X";
-				deleteButton.className = "delete-btn";
-				if (
-					links[i].startsWith("http") ||
-					links[i].startsWith("https") ||
-					links[i].startsWith("chrome:") ||
-					links[i].startsWith("edge:") ||
-					links[i].startsWith("chrome-extension:")
-				) {
-					var hyperlink = document.createElement("a");
-					hyperlink.textContent = shortenLink(links[i]);
-					hyperlink.href = links[i];
-					hyperlink.addEventListener("click", openLink);
-					deleteButton.addEventListener("click", function (event) {
-						event.stopPropagation();
-						var link = event.target.nextSibling.href;
-						chrome.runtime.sendMessage({
-							action: "removeLink",
-							link: link,
-						});
-					});
-					li.appendChild(deleteButton);
-					li.appendChild(hyperlink);
-				} else {
-					// Notiz
-					var note = document.createElement("span");
-					note.textContent = links[i];
-					deleteButton.addEventListener("click", function (event) {
-						event.stopPropagation();
-						var link = event.target.nextSibling.textContent;
-						chrome.runtime.sendMessage({
-							action: "removeLink",
-							link: link,
-						});
-					});
-					li.appendChild(deleteButton);
-					li.appendChild(note);
-				}
-				linkList.appendChild(li);
-			}
-		}
-	});
+    chrome.storage.sync.get("links", function (data) {
+        var links = data.links;
+        var linkList = document.getElementById("linkList");
+        linkList.innerHTML = "";
+        if (links.length === 0) {
+            console.log("No links in storage");
+            return;
+        } else {
+            for (var i = 0; i < links.length; i++) {
+                var li = document.createElement("li");
+                var deleteButton = document.createElement("button");
+                deleteButton.textContent = "X";
+                deleteButton.className = "delete-btn";
+                if (
+                    links[i].startsWith("http") ||
+                    links[i].startsWith("https") ||
+                    links[i].startsWith("chrome:") ||
+                    links[i].startsWith("edge:") ||
+                    links[i].startsWith("chrome-extension:")
+                ) {
+                    var hyperlink = document.createElement("a");
+                    hyperlink.textContent = shortenLink(links[i]);
+                    hyperlink.href = links[i];
+                    hyperlink.addEventListener("click", openLink);
+                    deleteButton.addEventListener("click", function (event) {
+						// ------------------------------
+						//				|
+						//				|
+						//				|
+						//				|
+						//			    |
+						//			  \	 /
+						//			   \/					
+                        event.stopPropagation();
+						// ------------------------------
+                        var link = event.target.nextSibling.href;
+                        chrome.runtime.sendMessage({
+                            action: "removeLink",
+                            link: link,
+                        });
+                    });
+                    li.appendChild(deleteButton);
+                    li.appendChild(hyperlink);
+                } else {
+                    // Notiz
+                    var note = document.createElement("span");
+                    note.textContent = links[i];
+                    note.style.overflowWrap = "break-word"; // Neue Version des Zeilenumbruchs für Notizen
+                    deleteButton.addEventListener("click", function (event) {
+						// ------------------------------
+						//				|
+						//				|
+						//				|
+						//				|
+						//			    |
+						//			  \	 /
+						//			   \/				
+                        event.stopPropagation();
+                        var link = event.target.nextSibling.textContent;
+                        chrome.runtime.sendMessage({
+                            action: "removeLink",
+                            link: link,
+                        });
+                    });
+                    li.appendChild(deleteButton);
+                    li.appendChild(note);
+                }
+                linkList.appendChild(li);
+            }
+        }
+    });
 }
+
 
 function addCurrentTab() {
 	chrome.tabs.query({
@@ -103,20 +122,36 @@ function openOptionsPage() {
 		action: "openOption",
 	});
 }
-
+////////////////////////////////////////////////////////////////////
+/*
+			 |
+			 |
+			 |
+			 |
+		   \  /
+		    \/
+*/
 function addLink() {
-	const newLink = document.getElementById("newLink");
-	if (newLink.value === "") {
-		return;
-	}
-	const link = newLink.value;
-	newLink.value = "";
-	chrome.runtime.sendMessage({
-		action: "addLink",
-		link: link,
-	});
+    const newLink = document.getElementById("newLink");
+    if (newLink.value === "") {
+        return;
+    }
+    // Schadcode-Sicherheitsüberprüfung
+    const link = sanitizeInput(newLink.value);
+    newLink.value = "";
+
+    chrome.runtime.sendMessage({
+        action: "addLink",
+        link: link,
+    });
 }
 
+function sanitizeInput(input) {
+    // Entferne potenziell gefährliche Zeichen
+    const sanitizedInput = input.replace(/[<>]/g, "");
+    return sanitizedInput;
+}
+/////////////////////////////////////////////////////////////////
 function clearList() {
 	chrome.storage.sync.set({
 			links: [],
