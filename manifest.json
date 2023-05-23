@@ -35,15 +35,6 @@
             "256": "assets/img/icons/hacker/icon256.png"
         },
         "default_title": "Link Safer",
-        "default_popup": "popup.html",
-        "icons": {
-            "16": "assets/img/icons/normal/icon16.png",
-            "32": "assets/img/icons/normal/icon32.png",
-            "48": "assets/img/icons/normal/icon48.png",
-            "64": "assets/img/icons/normal/icon64.png",
-            "96": "assets/img/icons/normal/icon96.png",
-            "128": "assets/img/icons/normal/icon128.png",
-            "256": "assets/img/icons/normal/icon256.png"
-        }
+        "default_popup": "popup.html"
     }
 }
