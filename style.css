@@ -35,25 +35,31 @@ body {
     padding: 10px;
     height: 500px;
     display: block;
+    max-width: 450px;
     min-width: 450px;
+
     overflow: hidden;
     justify-items: center;
     align-items: center;
     text-align: center;
 }
-body.optionbody{
+
+body.optionbody {
     background: linear-gradient(to bottom right, #2c2c2c, #1c1c1c);
     color: var(--color-red);
     font-family: "Courier New", Courier, monospace;
     position: relative;
     overflow-y: auto;
     overflow-x: hidden;
+    min-width: 450px;
+    max-width: 100%;
     padding: 10px;
     height: max-content;
     justify-items: center;
     align-items: center;
     text-align: center;
 }
+
 body.optionbody::before {
     content: "";
     position: absolute;
@@ -66,7 +72,7 @@ body.optionbody::before {
     transition: transform 0.5s ease-in-out;
 }
 
-.modal{
+.modal {
     background: linear-gradient(to bottom right, #2c2c2c, #1c1c1c);
     color: var(--color-primary);
     font-family: "Courier New", Courier, monospace;
@@ -81,8 +87,8 @@ body.optionbody::before {
     text-align: center;
 }
 
-.modal::before{
-	content: "";
+.modal::before {
+    content: "";
     position: absolute;
     top: -50%;
     left: -50%;
@@ -156,9 +162,9 @@ h3 {
     font-size: 1.2rem;
 }
 
-hr {
+.line-anim {
     border: none;
-    height: 2px;
+    height: 1px;
     background: linear-gradient(to right, var(--color-gradient-start) 0%, var(--color-gradient-mid) 75%, var(--color-gradient-end) 100%);
 
     margin: 20px 0;
@@ -166,7 +172,7 @@ hr {
     overflow: hidden;
 }
 
-hr::before {
+.line-anim::before {
     content: "";
     position: absolute;
     top: 0;
@@ -174,20 +180,21 @@ hr::before {
     width: 50%;
     height: 100%;
     background: linear-gradient(to right, var(--color-gradient-start) 0%, var(--color-gradient-mid) 75%, var(--color-gradient-end) 100%);
- 
     animation: move 4s linear infinite;
 }
 
 ul {
     list-style: none;
+    width: 100%;
     margin: 0;
+    margin-left: 1.5%;
     padding: 0;
     justify-content: space-evenly;
 }
 
 li {
     margin-bottom: 5px;
-    font-size: 18px;
+    font-size: 16px;
     overflow: hidden;
 }
 
@@ -196,8 +203,19 @@ input[type="text"] {
     color: var(--color-red);
     text-align: center;
     border: none;
+    border-radius: 5px;
     padding: 5px;
     width: 70%;
+}
+
+input[type="text"]::placeholder {
+    color: rgb(182, 177, 177);
+    font-family: "NorthStarHalf", "half-tone";
+}
+
+input[type="text"]:focus {
+    border-color: darkred;
+    outline-color: darkred;
 }
 
 a:visited {
@@ -213,6 +231,9 @@ a {
     width: 100%;
 }
 
+
+
+
 .btn-box {
     justify-content: center;
     align-items: center;
@@ -221,29 +242,14 @@ a {
 }
 
 .list-container {
-    width: 85%;
+    width: 100%;
     align-items: center;
     text-align: center;
     justify-content: space-between;
 }
 
-.delete-btn {
-    position: absolute;
-    right: 45px;
-    font-size: 14px;
-    font-weight: 400;
-    text-align: center;
-    background: transparent;
-    border-radius: 10px;
-    border: 1px solid #ff00004d;
-    color: #ff00004d;
-}
 
-.delete-btn:hover {
-    border: 1px solid #ff0000;
-    color: var(--color-red);
-    transition: 0.5s;
-}
+
 
 input[type="button"],
 input[type="submit"] {
@@ -275,7 +281,7 @@ input[type="submit"]:active {
 
 
 .social-container {
-	padding: 10px;
+    padding: 10px;
     justify-content: center;
     align-items: center;
     display: flex;
@@ -311,9 +317,9 @@ input[type="submit"]:active {
     border: 1px solid transparent;
     padding: 6px 10px;
     margin: 5px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: all 0.3s ease-in-out;
     transform: scale(1) rotate(0deg);
     position: relative;
@@ -349,15 +355,15 @@ input[type="submit"]:active {
     height: 1.1em;
     fill: currentColor;
     vertical-align: middle;
-	padding-right: 8px;
+    padding-right: 8px;
 }
 
-#passlen{
-	font-weight: bold;
-	font-size: 1.5em;
+#passlen {
+    font-weight: bold;
+    font-size: 1.5em;
 }
 
-select{
+select {
     background: linear-gradient(to right, var(--color-gradient-mid) 0%, var(--color-gradient-end) 100%);
     border-radius: 10px;
     font-family: "NorthStarHalf", "half-tone";
@@ -366,7 +372,66 @@ select{
     border: 1px solid transparent;
     padding: 8px 12px;
     margin: 5px;
-    background-repeat:no-repeat; 
-    background-position-x:95%; 
-    background-position-y:center;
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-position-y: center;
+}
+
+.list-element {
+    display: flex;
+    width: 98%;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.list-text {
+    width: 95%;
+    max-width: 95%;
+    text-align: center;
+    overflow-wrap: break-word;
+}
+
+.list-url {
+    width: 95%;
+    max-width: 95%;
+    text-align: center;
+    overflow-wrap: break-word;
+    text-decoration: underline;
+}
+
+.del-btn {
+    text-align: center;
+    right: 0;
+    border: 1px solid #ff00004d;
+    color: #ff00004d;
+    margin: 3px;
+    margin-left: 10px;
+    background: transparent;
+    border-radius: 50%;
+    padding: 4px 8px;
+    transition: .5s;
+}
+
+.del-btn:active {
+    box-shadow: 0px 0px 1px 2px #ff0000;
+    background-color: #ff00003d;
+    transition: .5s;
+}
+
+.del-btn:hover {
+    border: 1px solid #ff0000;
+    color: var(--color-red);
+    transition: 0.5s;
+}
+
+
+
+.line {
+    height: 1px;
+    border: none;
+    background: linear-gradient(to right, transparent, #ff0000, #ff0000, transparent);
+    margin: 3px;
+    margin-left: 16px;
+    margin-right: 16px;
 }

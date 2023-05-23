@@ -55,19 +55,19 @@ function changePreviewIcon(icontype) {
     var iconpreview = document.getElementById("previewimg");
     switch (icontype) {
         case "normal":
-            iconpreview.src = chrome.runtime.getURL("/assets/img/icons/normal/icon128.png");
+            iconpreview.src = chrome.runtime.getURL("../assets/img/icons/normal/icon128.png");
             break;
         case "binary":
-            iconpreview.src = chrome.runtime.getURL("/assets/img/icons/binarycode/icon128.png");
+            iconpreview.src = chrome.runtime.getURL("../assets/img/icons/binarycode/icon128.png");
             break;
         case "web-key":
-            iconpreview.src = chrome.runtime.getURL("/assets/img/icons/web-security/icon128.png");
+            iconpreview.src = chrome.runtime.getURL("../assets/img/icons/web-security/icon128.png");
             break;
         case "smart-key":
-            iconpreview.src = chrome.runtime.getURL("/assets/img/icons/smart-key/icon128.png");
+            iconpreview.src = chrome.runtime.getURL("../assets/img/icons/smart-key/icon128.png");
             break;
         case "hacker":
-            iconpreview.src = chrome.runtime.getURL("/assets/img/icons/hacker/icon128.png");
+            iconpreview.src = chrome.runtime.getURL("../assets/img/icons/hacker/icon128.png");
             break;
         default:
             break;
@@ -168,16 +168,20 @@ document.addEventListener('DOMContentLoaded', function () {
             if (isEqual(savedIconPath, ICON_DEFAULT_PATHS)) {
                 console.log('Gespeicherter Icon-Pfad:', iconPath);
                 selectBtn.value = "normal";
+                changePreviewIcon("normal");
             } else if (isEqual(savedIconPath, ICON_BINARY_PATHS)) {
                 selectBtn.value = "binary";
+                changePreviewIcon('binary');
             } else if (isEqual(savedIconPath, ICON_HACKER_PATHS)) {
                 selectBtn.value = "hacker";
+                changePreviewIcon('hacker');
             } else if (isEqual(savedIconPath, ICON_SMART_KEY_PATHS)) {
                 selectBtn.value = "smart-key";
+                changePreviewIcon('smart-key');
             } else if (isEqual(savedIconPath, ICON_WEB_KEY_PATHS)) {
                 selectBtn.value = "web-key";
+                changePreviewIcon('web-key');
             }
-            changePreviewIcon(selectBtn.value)
 
         } else {
             console.log('Kein gespeicherter Icon-Pfad gefunden.');

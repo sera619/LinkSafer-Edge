@@ -58,7 +58,6 @@ chrome.runtime.onInstalled.addListener(function () {
         });
 });
 
-
 chrome.runtime.onStartup.addListener(function () {
     loadAddonIcon();
 });
@@ -87,8 +86,6 @@ function addLink(link) {
         });
     });
 }
-
-
 
 function saveAddonIcon(iconPath) {
     chrome.storage.sync.set({
@@ -223,5 +220,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         saveAddonIcon(request.link);
     } else if (request.action === 'loadIcon') {
         loadAddonIcon();
+    } else if (request.action === 'generatePDF') {
+        const urlList = request.urlList;
+        const pdfBlob = generatePDF(urlList);
+        sendResponse({ pdfBlob });
     }
 });

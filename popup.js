@@ -1,66 +1,122 @@
 // Show all saved notice and hyperlinks
 function showLinks() {
-    chrome.storage.sync.get("links", function (data) {
-        var links = data.links;
-        var linkList = document.getElementById("linkList");
-        linkList.innerHTML = "";
-        if (links.length === 0) {
-            console.log("No links in storage");
-            return;
-        } else {
-            for (var i = 0; i < links.length; i++) {
-                var li = document.createElement("li");
-                var deleteButton = document.createElement("button");
-                deleteButton.textContent = "X";
-                deleteButton.className = "delete-btn";
-                if (
-                    isSafeLink(links[i]) // Check if the link is safe
-                ) {
-                    var hyperlink = document.createElement("a");
-                    hyperlink.textContent = shortenLink(links[i]);
-                    hyperlink.href = links[i];
-                    hyperlink.addEventListener("click", openLink);
-                    deleteButton.addEventListener("click", function (event) {
-                        event.stopPropagation();
-                        var link = event.target.nextSibling.href;
-                        chrome.runtime.sendMessage({
-                            action: "removeLink",
-                            link: link,
-                        });
-                    });
-                    li.appendChild(deleteButton);
-                    li.appendChild(hyperlink);
-                } else {
-                    // Notiz
-                    var note = document.createElement("span");
-                    note.textContent = sanitizeInput(links[i]);
-                    note.style.overflowWrap = "break-word";
-                    deleteButton.addEventListener("click", function (event) {
-                        event.stopPropagation();
-                        var link = event.target.nextSibling.textContent;
-                        chrome.runtime.sendMessage({
-                            action: "removeLink",
-                            link: link,
-                        });
-                    });
-                    li.appendChild(deleteButton);
-                    li.appendChild(note);
-                }
-                linkList.appendChild(li);
-            }
-        }
-    });
+	chrome.storage.sync.get("links", function (data) {
+		var links = data.links;
+		var linkList = document.getElementById("linkList");
+		linkList.innerHTML = "";
+		if (links.length === 0) {
+			console.log("No links in storage");
+			return;
+		} else {
+			for (var i = 0; i < links.length; i++) {
+				var li = document.createElement("li");
+				if (
+					links[i].startsWith("http") ||
+					links[i].startsWith("https") ||
+					links[i].startsWith("chrome:") ||
+					links[i].startsWith("chrome-extension:")
+				) {
+					const linkElement = createLinkListElement(links[i]);
+					li.appendChild(linkElement);
+				} else {
+					// Notiz
+					const listelement = createNoticeListElement(links[i]);
+					li.appendChild(listelement);
+				}
+				linkList.appendChild(li);
+				const line = document.createElement('hr')
+				line.className = "line";
+				linkList.appendChild(line)
+			}
+		}
+	});
 }
 
 function isSafeLink(link) {
-    const safeProtocols = ["http", "https", "chrome:", "edge:", "chrome-extension:"];
-    const url = new URL(link);
-    return safeProtocols.includes(url.protocol);
+	const safeProtocols = ["http", "https", "chrome:", "edge:", "chrome-extension:"];
+	try {
+		const url = new URL(link);
+		return safeProtocols.includes(url.protocol);
+	} catch (error) {
+		//console.error("Invalid URL:", link);
+		return false;
+	}
 }
 
-function sanitizeInput(input) {
-    const sanitizedInput = input.replace(/[<>]/g, "");
-    return sanitizedInput;
+function shortenLink(link) {
+	const maxLength = 35;
+	if (link.length > maxLength) {
+		return link.substring(0, maxLength - 3) + "...";
+	} else {
+		return link;
+	}
+}
+
+function openLink(event) {
+	const link = event.target.href; // Überprüfe, ob der Link auf den Erweiterungsmanager zeigt
+	if (link === 'edge://extensions/') {
+		return;
+	} else {
+		chrome.tabs.create({
+			url: link,
+		});
+	}
+}
+
+
+function createLinkListElement(link) {
+	const hyperlink = document.createElement("a");
+	hyperlink.textContent = shortenLink(link);
+	hyperlink.href = link;
+	hyperlink.className = "list-url";
+	hyperlink.addEventListener("click", openLink);
+
+	const deleteButton = document.createElement("button");
+	deleteButton.className = "del-btn";
+	deleteButton.innerText = "X";
+	deleteButton.addEventListener("click", function (event) {
+		event.stopPropagation();
+		const noteElement = event.target.parentNode;
+		const link = noteElement.firstChild.href;
+		console.log(link);
+		chrome.runtime.sendMessage({
+			action: "removeLink",
+			link: link
+		});
+	});
+
+	const listelement = document.createElement("div");
+	listelement.className = "list-element";
+	listelement.appendChild(hyperlink);
+	listelement.appendChild(deleteButton);
+
+	return listelement;
+}
+
+function createNoticeListElement(link) {
+	const note = document.createElement("div");
+	note.className = "list-text";
+	note.textContent = link;
+
+	const deleteButton = document.createElement("button");
+	deleteButton.className = "del-btn";
+	deleteButton.innerText = "X";
+	deleteButton.addEventListener("click", function (event) {
+		event.stopPropagation();
+		const noteElement = event.target.parentNode;
+		const link = noteElement.firstChild.textContent;
+		chrome.runtime.sendMessage({
+			action: "removeLink",
+			link: link
+		});
+	});
+
+	const listelement = document.createElement("div");
+	listelement.className = "list-element";
+	listelement.appendChild(note);
+	listelement.appendChild(deleteButton);
+
+	return listelement;
 }
 
 function addCurrentTab() {
@@ -90,21 +146,8 @@ function setDownloadBtnVisible(mode) {
 	}
 }
 
-function shortenLink(link) {
-	const maxLength = 30;
-	if (link.length > maxLength) {
-		return link.substring(0, maxLength - 3) + "...";
-	} else {
-		return link;
-	}
-}
 
-function openLink(event) {
-	var link = event.target.href;
-	chrome.tabs.create({
-		url: link,
-	});
-}
+
 
 function openOptionsPage() {
 	chrome.runtime.sendMessage({
@@ -119,11 +162,15 @@ function addLink() {
 	}
 	const link = sanitizeInput(newLink.value);
 	newLink.value = "";
-
 	chrome.runtime.sendMessage({
 		action: "addLink",
 		link: link,
 	});
+}
+
+function sanitizeInput(input) {
+	const sanitizedInput = input.replace(/<[^>]+>/g, "");
+	return sanitizedInput;
 }
 
 
@@ -257,7 +304,7 @@ function copyPasswordToClipboard() {
 
 function getExtensionVersion() {
 	const manifest = chrome.runtime.getManifest();
-	var version = manifest.version;
+	const version = manifest.version;
 	return version;
 }
 
@@ -287,28 +334,28 @@ async function downloadTextFile() {
 document.addEventListener("DOMContentLoaded", function () {
 	showLinks();
 	setDownloadBtnVisible(true);
-	var addLinkForm = document.getElementById("addLinkForm");
+	const addLinkForm = document.getElementById("addLinkForm");
 	addLinkForm.addEventListener("submit", function (event) {
 		event.preventDefault();
 		addLink();
 	});
-	var addLinkButton = document.getElementById("add-tab-btn");
+	const addLinkButton = document.getElementById("add-tab-btn");
 	addLinkButton.addEventListener("click", function (event) {
 		event.preventDefault();
 		addCurrentTab();
 	});
-	var clearButton = document.getElementById("clear-list-btn");
+	const clearButton = document.getElementById("clear-list-btn");
 	clearButton.addEventListener("click", function (event) {
 		event.preventDefault();
 		clearList();
 	});
-	var optionButton = document.getElementById("option-btn");
+	const optionButton = document.getElementById("option-btn");
 	optionButton.addEventListener("click", function (event) {
 		event.preventDefault();
 		openOptionsPage();
 	});
 
-	var notifyButton = document.getElementById("notify-btn");
+	const notifyButton = document.getElementById("notify-btn");
 	notifyButton.addEventListener("click", function (event) {
 		event.preventDefault();
 		//showNotify();
@@ -317,27 +364,27 @@ document.addEventListener("DOMContentLoaded", function () {
 		changeDisplayFrame();
 	});
 
-	var passlenslider = document.getElementById("password-length");
-	var passsizetext = document.getElementById("passlen");
+	const passlenslider = document.getElementById("password-length");
+	const passsizetext = document.getElementById("passlen");
 	passsizetext.innerHTML = passlenslider.value;
 	passlenslider.addEventListener("input", function (event) {
 		event.preventDefault();
 		passsizetext.innerHTML = passlenslider.value;
 	});
 
-	var genpassButton = document.getElementById("gen-pass-btn");
+	const genpassButton = document.getElementById("gen-pass-btn");
 	genpassButton.addEventListener("click", function (event) {
 		event.preventDefault();
 		generatePassword();
 	});
 
-	var copyPassButton = document.getElementById("copy-pass-btn");
+	const copyPassButton = document.getElementById("copy-pass-btn");
 	copyPassButton.addEventListener("click", function (event) {
 		event.preventDefault();
 		copyPasswordToClipboard();
 	});
 
-	var backButton = document.getElementById("back-btn");
+	const backButton = document.getElementById("back-btn");
 	backButton.addEventListener("click", function (event) {
 		event.preventDefault();
 		changeDisplayFrame();
