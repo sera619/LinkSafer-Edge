@@ -14,27 +14,14 @@ function showLinks() {
                 deleteButton.textContent = "X";
                 deleteButton.className = "delete-btn";
                 if (
-                    links[i].startsWith("http") ||
-                    links[i].startsWith("https") ||
-                    links[i].startsWith("chrome:") ||
-                    links[i].startsWith("edge:") ||
-                    links[i].startsWith("chrome-extension:")
+                    isSafeLink(links[i]) // Check if the link is safe
                 ) {
                     var hyperlink = document.createElement("a");
                     hyperlink.textContent = shortenLink(links[i]);
                     hyperlink.href = links[i];
                     hyperlink.addEventListener("click", openLink);
                     deleteButton.addEventListener("click", function (event) {
-						// ------------------------------
-						//				|
-						//				|
-						//				|
-						//				|
-						//			    |
-						//			  \	 /
-						//			   \/					
                         event.stopPropagation();
-						// ------------------------------
                         var link = event.target.nextSibling.href;
                         chrome.runtime.sendMessage({
                             action: "removeLink",
@@ -46,17 +33,9 @@ function showLinks() {
                 } else {
                     // Notiz
                     var note = document.createElement("span");
-                    note.textContent = links[i];
-                    note.style.overflowWrap = "break-word"; // Neue Version des Zeilenumbruchs für Notizen
+                    note.textContent = sanitizeInput(links[i]);
+                    note.style.overflowWrap = "break-word";
                     deleteButton.addEventListener("click", function (event) {
-						// ------------------------------
-						//				|
-						//				|
-						//				|
-						//				|
-						//			    |
-						//			  \	 /
-						//			   \/				
                         event.stopPropagation();
                         var link = event.target.nextSibling.textContent;
                         chrome.runtime.sendMessage({
@@ -73,6 +52,16 @@ function showLinks() {
     });
 }
 
+function isSafeLink(link) {
+    const safeProtocols = ["http", "https", "chrome:", "edge:", "chrome-extension:"];
+    const url = new URL(link);
+    return safeProtocols.includes(url.protocol);
+}
+
+function sanitizeInput(input) {
+    const sanitizedInput = input.replace(/[<>]/g, "");
+    return sanitizedInput;
+}
 
 function addCurrentTab() {
 	chrome.tabs.query({
@@ -122,36 +111,23 @@ function openOptionsPage() {
 		action: "openOption",
 	});
 }
-////////////////////////////////////////////////////////////////////
-/*
-			 |
-			 |
-			 |
-			 |
-		   \  /
-		    \/
-*/
+
 function addLink() {
-    const newLink = document.getElementById("newLink");
-    if (newLink.value === "") {
-        return;
-    }
-    // Schadcode-Sicherheitsüberprüfung
-    const link = sanitizeInput(newLink.value);
-    newLink.value = "";
+	const newLink = document.getElementById("newLink");
+	if (newLink.value === "") {
+		return;
+	}
+	const link = sanitizeInput(newLink.value);
+	newLink.value = "";
 
-    chrome.runtime.sendMessage({
-        action: "addLink",
-        link: link,
-    });
+	chrome.runtime.sendMessage({
+		action: "addLink",
+		link: link,
+	});
 }
 
-function sanitizeInput(input) {
-    // Entferne potenziell gefährliche Zeichen
-    const sanitizedInput = input.replace(/[<>]/g, "");
-    return sanitizedInput;
-}
-/////////////////////////////////////////////////////////////////
+
+
 function clearList() {
 	chrome.storage.sync.set({
 			links: [],
@@ -170,7 +146,7 @@ function showNotify() {
 	});
 }
 
-function myConfirm(message, title="Attention") {
+function myConfirm(message, title = "Attention") {
 	var modal = document.createElement("div");
 	modal.style.display = "block";
 	modal.style.position = "fixed";
@@ -194,7 +170,7 @@ function myConfirm(message, title="Attention") {
 
 	var h = document.createElement("h3");
 	h.innerText = title;
-	
+
 	modalContent.appendChild(h);
 	var hr = document.createElement("hr");
 	modalContent.appendChild(hr);
