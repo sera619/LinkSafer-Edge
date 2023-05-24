@@ -301,12 +301,12 @@ function getBookmarkDirs(callback) {
 }
 
 function createBookmark() {
-    const bookmarkName = document.getElementById("bookmark-name");
-    const bookmarkURL = document.getElementById("bookmark-url");
-    const bookmarkDirSelect = document.getElementById("bookmark-dir-select");
-    const selectedDir = bookmarkDirSelect.options[bookmarkDirSelect.selectedIndex].text;
+	const bookmarkName = document.getElementById("bookmark-name");
+	const bookmarkURL = document.getElementById("bookmark-url");
+	const bookmarkDirSelect = document.getElementById("bookmark-dir-select");
+	const selectedDir = bookmarkDirSelect.options[bookmarkDirSelect.selectedIndex].text;
 
-	if(bookmarkName === ""){
+	if (bookmarkName === "") {
 		myConfirm("Please enter a valid name for your new bookmark!", "attention");
 		return;
 	} else {
@@ -316,9 +316,13 @@ function createBookmark() {
 				if (node.children) {
 					node.children.forEach(function (child) {
 						if (child.title === selectedDir) {
-							chrome.bookmarks.create({ parentId: child.id, title: bookmarkName.value, url: bookmarkURL.value }, function (newBookmark) {
+							chrome.bookmarks.create({
+								parentId: child.id,
+								title: bookmarkName.value,
+								url: bookmarkURL.value
+							}, function (newBookmark) {
 								//console.log("Bookmark created:", newBookmark);
-								myConfirm("The URL: "+bookmarkURL+" successfully saved with name: "+bookmarkName+" !", "success");
+								myConfirm("The URL: " + bookmarkURL.value + " successfully saved with name: " + bookmarkName.value + " !", "success");
 								bookmarkName.value = "";
 								bookmarkURL.value = "";
 							});
@@ -485,6 +489,19 @@ function saveTabsToSyncStorage() {
 	});
 }
 
+function saveShowTooltipOption(value) {
+	chrome.storage.sync.set({
+		showTooltip: value
+	});
+}
+
+// Funktion zum Abrufen der Option aus dem Synchronisierungsspeicher
+function getShowTooltipOption(callback) {
+	chrome.storage.sync.get("showTooltip", function (result) {
+		var value = result.showTooltip;
+		callback(value);
+	});
+}
 
 // init popup and eventhandler
 document.addEventListener("DOMContentLoaded", function () {
@@ -542,11 +559,11 @@ document.addEventListener("DOMContentLoaded", function () {
 	addTooltip(restoreSessionButton, "Restore your saved tab session");
 
 	const clearSessionButton = document.getElementById("clear-session-btn");
-	clearSessionButton.addEventListener("click", function(event) {
+	clearSessionButton.addEventListener("click", function (event) {
 		event.preventDefault();
 		deleteTabsFromSyncStorage();
 	})
-	addTooltip(clearSessionButton,"Delete saved tab session");
+	addTooltip(clearSessionButton, "Delete saved tab session");
 
 
 	const passlenslider = document.getElementById("password-length");
@@ -582,7 +599,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	})
 
 	const addBookmarkButton = document.getElementById('add-bookmark-btn');
-	addBookmarkButton.addEventListener("click", function(event){
+	addBookmarkButton.addEventListener("click", function (event) {
 		event.preventDefault();
 		createBookmark();
 	})
