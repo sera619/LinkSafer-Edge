@@ -38,14 +38,14 @@ If you prefer to install the extension manually, follow these steps:
 
 ## Features
 
-- Adding Links: Users can add new links by entering the URL and clicking on the "Add" button. They can also directly add the currently active tab as a link by clicking on the "Add Current Tab" button. The added links are also saved as bookmarks.
-- Link Shortening: Long links can be shortened for better readability. The extension automatically shortens lengthy links and displays them with an ellipsis (...).
-- Opening Links: By clicking on a hyperlink, users can open the respective link in a new browser tab.
-- Deleting Items: Saved items can be easily deleted by clicking on the "X" button next to each item.
-- Clearing the List: The extension provides an option to clear the entire list of saved links and notes. This action removes all items from the list.
-- Password Generator: Link Safer includes a password generator feature that allows users to generate strong and secure passwords. This feature helps users create unique and complex passwords for their online accounts.
-- Changing Addon Logo: Users have the ability to customize the addon logo. They can choose from a set of predefined logos or upload their own logo image to personalize the appearance of the extension.
-- Saving and Restoring Tabs: The extension allows users to save the currently open tabs and later restore them. This feature is useful for quickly accessing a set of frequently used tabs or for resuming work from a previous session.
+- **Adding Links:** Users can add new links by entering the URL and clicking on the "Add" button. They can also directly add the currently active tab as a link by clicking on the "Add Current Tab" button. The added links are also saved as bookmarks.
+- **Link Shortening:** Long links can be shortened for better readability. The extension automatically shortens lengthy links and displays them with an ellipsis (...).
+- **Opening Links:** By clicking on a hyperlink, users can open the respective link in a new browser tab.
+- **Deleting Items:** Saved items can be easily deleted by clicking on the "X" button next to each item.
+- **Clearing the List:** The extension provides an option to clear the entire list of saved links and notes. This action removes all items from the list.
+- **Password Generator:** Link Safer includes a password generator feature that allows users to generate strong and secure passwords. This feature helps users create unique and complex passwords for their online accounts.
+- **Changing Addon Logo:** Users have the ability to customize the addon logo. They can choose from a set of predefined logos or upload their own logo image to personalize the appearance of the extension.
+- **Saving and Restoring Tabs:** The extension allows users to save the currently open tabs and later restore them. This feature is useful for quickly accessing a set of frequently used tabs or for resuming work from a previous session.
 
 <details>
     <summary>Screenshots</summary>
