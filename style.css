@@ -228,7 +228,12 @@ a {
 }
 
 #addLinkForm {
-    width: 100%;
+    width: 90%;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-evenly;
+    text-align: center;
 }
 
 
@@ -238,7 +243,9 @@ a {
     justify-content: center;
     align-items: center;
     text-align: center;
-    display: inline;
+    display: flex;
+    flex-flow: row;
+    max-width: 90%;
 }
 
 .list-container {
@@ -357,6 +364,12 @@ input[type="submit"]:active {
     vertical-align: middle;
     padding-right: 8px;
 }
+.icon-only{
+    width: 1.1em;
+    height: 1.1em;
+    fill: currentColor;
+    vertical-align: middle;
+}
 
 #passlen {
     font-weight: bold;
@@ -403,7 +416,7 @@ select {
 .del-btn {
     text-align: center;
     right: 0;
-    border: 1px solid #ff00004d;
+    border: 1.5px solid #ff00004d;
     color: #ff00004d;
     margin: 3px;
     margin-left: 10px;
@@ -420,7 +433,7 @@ select {
 }
 
 .del-btn:hover {
-    border: 1px solid #ff0000;
+    border: 1.5px solid #ff0000;
     color: var(--color-red);
     transition: 0.5s;
 }
@@ -434,4 +447,26 @@ select {
     margin: 3px;
     margin-left: 16px;
     margin-right: 16px;
+}
+
+
+.add-bookmark{
+    font-family: "NorthStarHalf", "half-tone";
+}
+.add-bookmark label{
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.add-bookmark input[type="text"]::placeholder{
+    color: rgb(173, 168, 168);
+    letter-spacing: 0.2em;
+}
+.tooltip{
+    z-index: 1;
+    background: #1c1c1c;
+    color: var(--color-primary);
+    text-align: center;
+    padding: .8em 1.3em;
+    border: 1px solid var(--color-primary);
+    border-radius: 5px;
 }

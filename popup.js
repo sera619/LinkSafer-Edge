@@ -6,8 +6,10 @@ function showLinks() {
 		linkList.innerHTML = "";
 		if (links.length === 0) {
 			console.log("No links in storage");
+			setDownloadBtnVisible(false);
 			return;
 		} else {
+			setDownloadBtnVisible(true);
 			for (var i = 0; i < links.length; i++) {
 				var li = document.createElement("li");
 				if (
@@ -78,16 +80,27 @@ function createLinkListElement(link) {
 		event.stopPropagation();
 		const noteElement = event.target.parentNode;
 		const link = noteElement.firstChild.href;
-		console.log(link);
+
 		chrome.runtime.sendMessage({
 			action: "removeLink",
 			link: link
 		});
 	});
-
+	addTooltip(deleteButton, "Remove this entry")
+	const addBookmarkButton = document.createElement("button");
+	addBookmarkButton.className = "del-btn";
+	addBookmarkButton.innerText = "+";
+	addBookmarkButton.addEventListener("click", function (event) {
+		event.preventDefault();
+		const noteElement = event.target.parentNode;
+		const link = noteElement.firstChild.href;
+		showBookmarkDisplay(link);
+	});
+	addTooltip(addBookmarkButton, "Add URL to bookmarks")
 	const listelement = document.createElement("div");
 	listelement.className = "list-element";
 	listelement.appendChild(hyperlink);
+	listelement.appendChild(addBookmarkButton);
 	listelement.appendChild(deleteButton);
 
 	return listelement;
@@ -101,6 +114,7 @@ function createNoticeListElement(link) {
 	const deleteButton = document.createElement("button");
 	deleteButton.className = "del-btn";
 	deleteButton.innerText = "X";
+
 	deleteButton.addEventListener("click", function (event) {
 		event.stopPropagation();
 		const noteElement = event.target.parentNode;
@@ -270,6 +284,41 @@ function changeDisplayFrame() {
 	mainframe.toggleAttribute("hidden");
 }
 
+function getBookmarkDirs(callback) {
+	chrome.bookmarks.getTree(function (bookmarkTreeNodes) {
+		var bookmarkList = [];
+		bookmarkTreeNodes.forEach(function (node) {
+			if (node.children) {
+				node.children.forEach(function (child) {
+					var title = String(child.title);
+					bookmarkList.push(title);
+				});
+			}
+		});
+		callback(bookmarkList);
+	});
+}
+
+function showBookmarkDisplay(link) {
+	var bookmarkframe = document.getElementById("bookmarkframe");
+	var mainframe = document.getElementById("main");
+	bookmarkframe.toggleAttribute("hidden");
+	mainframe.toggleAttribute("hidden");
+	const bookmarkName = document.getElementById("bookmark-name");
+	const bookmarkURL = document.getElementById("bookmark-url");
+	const bookmarkDirSelect = document.getElementById("bookmark-dir-select");
+	bookmarkURL.value = link;
+
+	getBookmarkDirs(function (bookmarkList) {
+		for (var i = 0; i < bookmarkList.length; i++) {
+			var option = document.createElement('option');
+			option.text = bookmarkList[i];
+			bookmarkDirSelect.appendChild(option);
+			console.log(bookmarkList[i]);
+		}
+	});
+}
+
 let generatedPassword = "";
 
 function generatePassword() {
@@ -327,8 +376,78 @@ async function downloadTextFile() {
 		a.download = "links.txt";
 		a.click();
 		myConfirm("Your link & notice list successfully downloaded!", "Information");
+		a.remove();
 	});
 }
+
+function addTooltip(element, description) {
+	var tooltip = document.createElement("div");
+	tooltip.className = "tooltip";
+	tooltip.textContent = description;
+	tooltip.style.visibility = "hidden";
+	tooltip.style.position = "absolute";
+
+	document.body.appendChild(tooltip);
+
+	element.addEventListener("mousemove", function (event) {
+		var tooltipWidth = tooltip.offsetWidth;
+		var tooltipHeight = tooltip.offsetHeight;
+
+		var mouseX = event.clientX;
+		var mouseY = event.clientY;
+
+		tooltip.style.top = mouseY - tooltipHeight - 10 + "px";
+		tooltip.style.left = mouseX - tooltipWidth / 2 + "px";
+		tooltip.style.visibility = "visible";
+
+		// Automatisches Ausblenden nach 3 Sekunden
+		setTimeout(function () {
+			tooltip.style.visibility = "hidden";
+		}, 3000);
+	});
+
+	element.addEventListener("mouseout", function () {
+		tooltip.style.visibility = "hidden";
+	});
+}
+
+function restoreTabsFromSyncStorage() {
+	chrome.storage.sync.get("savedTabs", function (result) {
+		var tabData = result.savedTabs || [];
+
+		tabData.forEach(function (tab) {
+			chrome.tabs.create({
+				url: tab.url,
+				active: false
+			});
+		});
+
+		console.log("Tabs restored from sync storage:", tabData);
+	});
+}
+
+function saveTabsToSyncStorage() {
+	chrome.sessions.getRecentlyClosed({
+		maxResults: 100
+	}, function (sessions) {
+		var tabData = sessions.filter(function (session) {
+			return session.tab && session.tab.url.startsWith("http");
+		}).map(function (session) {
+			return {
+				url: session.tab.url,
+				title: session.tab.title,
+			};
+		});
+
+		chrome.storage.sync.set({
+			savedTabs: tabData
+		}, function () {
+			console.log("Tabs saved to sync storage:", tabData);
+		});
+	});
+}
+
+
 
 // init popup and eventhandler
 document.addEventListener("DOMContentLoaded", function () {
@@ -339,21 +458,27 @@ document.addEventListener("DOMContentLoaded", function () {
 		event.preventDefault();
 		addLink();
 	});
+
 	const addLinkButton = document.getElementById("add-tab-btn");
 	addLinkButton.addEventListener("click", function (event) {
 		event.preventDefault();
 		addCurrentTab();
 	});
+	addTooltip(addLinkButton, "Add active tab to list")
+
 	const clearButton = document.getElementById("clear-list-btn");
 	clearButton.addEventListener("click", function (event) {
 		event.preventDefault();
 		clearList();
 	});
+	addTooltip(clearButton, "Clear the list")
+
 	const optionButton = document.getElementById("option-btn");
 	optionButton.addEventListener("click", function (event) {
 		event.preventDefault();
 		openOptionsPage();
 	});
+	addTooltip(optionButton, "Open options/help menu")
 
 	const notifyButton = document.getElementById("notify-btn");
 	notifyButton.addEventListener("click", function (event) {
@@ -363,6 +488,24 @@ document.addEventListener("DOMContentLoaded", function () {
 		//myConfirm("Test");
 		changeDisplayFrame();
 	});
+	addTooltip(notifyButton, "Open passwordgenerator");
+	const addNoteButton = document.getElementById("add-note-btn");
+	addTooltip(addNoteButton, "Add note to list");
+
+	const saveSessionButton = document.getElementById("save-session-btn");
+	saveSessionButton.addEventListener("click", function(event){
+		event.preventDefault();
+		saveTabsToSyncStorage();
+
+	})
+	addTooltip(saveSessionButton, "Save your current tab session");
+	
+	const restoreSessionButton = document.getElementById('restore-session-btn');
+	restoreSessionButton.addEventListener("click", function(event){
+		event.preventDefault();
+		restoreTabsFromSyncStorage();
+	})
+	addTooltip(restoreSessionButton, "Restore your saved tab session");
 
 	const passlenslider = document.getElementById("password-length");
 	const passsizetext = document.getElementById("passlen");
@@ -384,11 +527,17 @@ document.addEventListener("DOMContentLoaded", function () {
 		copyPasswordToClipboard();
 	});
 
-	const backButton = document.getElementById("back-btn");
-	backButton.addEventListener("click", function (event) {
+	const passBackButton = document.getElementById("back-btn");
+	passBackButton.addEventListener("click", function (event) {
 		event.preventDefault();
 		changeDisplayFrame();
 	});
+
+	const bookmarkBackButton = document.getElementById("bookmark-back-btn");
+	bookmarkBackButton.addEventListener("click", function (event) {
+		event.preventDefault();
+		showBookmarkDisplay();
+	})
 
 	const donwloadBtn = document.getElementById("download-list-btn");
 	donwloadBtn.addEventListener("click", function (event) {

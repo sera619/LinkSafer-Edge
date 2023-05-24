@@ -15,20 +15,66 @@
         <h1>Link Safer</h1>
         <hr class="line-anim" />
         <div class="btn-box">
-          <input type="button" id="clear-list-btn" value="Clear" />
-          <input type="button" id="add-tab-btn" value="Add Tab" />
-          <input type="button" id="option-btn" value="Help" />
-          <input type="button" id="notify-btn" value="Pass" />
-        </div>
-        <br>
-        <br>
+          <button class="button-with-icon" id="clear-list-btn">
+            <img 
+            src="../assets/img/eraser-solid.svg"
+            alt="generate Icon"
+            class="icon-only"
+            style="fill: #1e1e1e">
+          </button>
+          <button class="button-with-icon" id="add-tab-btn">
+            <img
+            src="../assets/img/folder-plus-solid.svg"
+            alt="generate Icon"
+            class="icon-only"
+            style="fill: #1e1e1e">
+          </button>
+          <button class="button-with-icon" id="save-session-btn">
+            <img
+            src="../assets/img/boxes-packing-solid.svg"
+            alt="generate Icon"
+            class="icon-only"
+            style="fill: #1e1e1e">
+          </button>
+          <button class="button-with-icon" id="restore-session-btn">
+            <img
+            src="../assets/img/window-restore-solid.svg"
+            alt="generate Icon"
+            class="icon-only"
+            style="fill: #1e1e1e">
+          </button>
+          <button class="button-with-icon" id="notify-btn">
+            <img
+            src="../assets/img/key-solid.svg"
+            alt="generate Icon"
+            class="icon-only"
+            style="fill: #1e1e1e">
+          </button>
+          <button class="button-with-icon" id="option-btn">
+            <img
+            src="../assets/img/gear-solid.svg"
+            alt="generate Icon"
+            class="icon-only"
+            style="fill: #1e1e1e">
+          </button>
+          
+          <!--
+
+            <input type="button" id="bookmark-btn" value="Bookmark" />
+          -->
+          </div>
+          <div class="line"></div>
+          <br/>
         <!-- TEST CONATINER
           <p id="test"></p>
         -->
         <!-- LINK CONTAINER -->
         <form id="addLinkForm">
-          <input type="text" id="newLink" placeholder="Add a notice..." />
-          <input type="submit" value="Add" />
+          <input type="text" id="newLink" placeholder="Add a note..." />
+          <button type="submit" id="add-note-btn"class="button-with-icon"><img src="../assets/img/file-pen-solid.svg"
+            alt="generate Icon"
+            class="icon-only"
+            style="fill: #1e1e1e"/></button>
         </form>
         <br />
         <div class="line"></div>
@@ -47,10 +93,10 @@
         <div hidden id="downloadbtnbox">
           <button id="download-list-btn" class="button-with-icon">
             <img
-              src="../assets/img/floppy-disk-regular.svg"
+              src="../assets/img/file-arrow-down-solid.svg"
               alt="back Icon"
               class="icon"
-              style="fill: black"
+              style="fill: #1e1e1e"
             />
             Download List
           </button>
@@ -61,7 +107,7 @@
       <div hidden id="generator" class="passwordgenerator">
         <div class="password-options">
           <h2>Password Generator</h2>
-          <hr />
+          <hr class="line-anim"/>
           <br />
           <label for="numbers">Include Numbers:</label>
           <input type="checkbox" id="numbers" /><br />
@@ -86,7 +132,7 @@
               src="../assets/img/key-solid.svg"
               alt="generate Icon"
               class="icon"
-              style="fill: black"
+              style="fill: #1e1e1e"
             />
             Generate Password</button
           ><br />
@@ -95,7 +141,7 @@
               src="../assets/img/copy-solid.svg"
               alt="copy Icon"
               class="icon"
-              style="fill: black"
+              style="fill: #1e1e1e"
             />
             Copy Password</button
           ><br />
@@ -104,15 +150,57 @@
               src="../assets/img/right-from-bracket-solid.svg"
               alt="back Icon"
               class="icon"
-              style="fill: black"
+              style="fill: #1e1e1e"
             />
             Back</button
           ><br />
         </div>
       </div>
-      <footer>
-        <p id="version-text"></p>
-      </footer>
+
+
+      <div hidden id="bookmarkframe" class="add-bookmark">
+        <h2>Bookmark</h2>
+        <hr class="line-anim">
+        <br>
+
+        <label for="bookmark-name">Bookmark Name:</label>
+        <br><br>
+        <input type="text" name="bookmark-name" id="bookmark-name" required placeholder="Enter a name...">
+        <br><br><br>
+
+        <label for="bookmark-url">URL:</label>
+        <br><br>
+        <input type="text" id="bookmark-url" required>
+        <br><br><br>
+
+        <label for="bookmark-dir-select">Select a bookmark dictionary:</label>
+        <br><br>
+        <select id="bookmark-dir-select"></select>
+        <br><br>
+        <div class="line"></div>
+        <br>
+        <button id="add-bookmark-btn" class="button-with-icon"><img
+          src="../assets/img/file-circle-plus-solid.svg"
+          alt="add bookmark Icon"
+          class="icon"
+          style="fill: #1e1e1e"
+        /> Add Bookmark</button>
+        <br>
+        <button id="bookmark-back-btn" class="button-with-icon"><img
+          src="../assets/img/right-from-bracket-solid.svg"
+          alt="back Icon"
+          class="icon"
+          style="fill: #1e1e1e"
+        /> Back</button>
+      </div>
+
+
+
+
     </center>
   </body>
+  <footer>
+    <p id="version-text"></p>
+    <div class="line"></div>
+  </footer>
 </html>

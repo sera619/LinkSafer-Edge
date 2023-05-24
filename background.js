@@ -1,4 +1,3 @@
-
 const ICON_DEFAULT_PATHS = {
     "16": chrome.runtime.getURL("/assets/img/icons/normal/icon16.png"),
     "32": chrome.runtime.getURL("/assets/img/icons/normal/icon32.png"),
@@ -56,6 +55,7 @@ chrome.runtime.onInstalled.addListener(function () {
         function () {
             console.log('Linklist initialized!');
         });
+
 });
 
 chrome.runtime.onStartup.addListener(function () {
@@ -220,9 +220,5 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         saveAddonIcon(request.link);
     } else if (request.action === 'loadIcon') {
         loadAddonIcon();
-    } else if (request.action === 'generatePDF') {
-        const urlList = request.urlList;
-        const pdfBlob = generatePDF(urlList);
-        sendResponse({ pdfBlob });
     }
 });
