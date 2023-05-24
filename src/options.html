@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Link Safer | Help</title>
-    <link rel="stylesheet"  href="../style.css">
+    <link rel="stylesheet" href="../style.css">
     <script src="options.js"></script>
 </head>
 <body class="optionbody">
@@ -17,20 +17,44 @@
             <hr class="line-anim">
             <h4>Current Version: <u id="version">1.3.2</u></h4>
             <p id="option-desc">First off, thank you very much for using my software!<br>
-                <br>Link Safer is a browser extension for Microsoft Edge and Google Chrome that allows users to save links and notes securely. Its been planned a feature to generate secure passwords. Link Safer is created by S3R43o3 using HTML, CSS, and JavaScript. The extension uses the storage and tabs permissions to store and access the user's data. The extension has an options page where users can customize their settings, and a popup where users can view and manage their links, notes, and passwords. Link Safer is a useful and convenient tool for anyone who wants to keep their online data safe and organized.
+                <br>Link Safer is a browser extension for Microsoft Edge and Google Chrome that allows users to save links and notes securely. It has a planned feature to generate secure passwords. Link Safer is created by S3R43o3 using HTML, CSS, and JavaScript. The extension uses the storage and tabs permissions to store and access the user's data. The extension has an options page where users can customize their settings and a popup where users can view and manage their links, notes, and passwords. Link Safer is a useful and convenient tool for anyone who wants to keep their online data safe and organized.
                 <br>
             </p>
+            <div class="line"></div>
+            <br>
+            <br>
+            <br>
+    <h2>User instructions</h2>
+            <br>
+            <br>
+	<ol>
+		<li>To add a new link or notice, enter the URL or text in the input field and click the "Add" button.</li>
+		<li>To add the current active tab to the list, click the "Add Current Tab" button.</li>
+		<li>To remove a link or notice from the list, click the "X" button next to it.</li>
+		<li>To open a link, click on the link text.</li>
+		<li>To add a link to bookmarks, click the "+" button next to it.</li>
+		<li>To clear the entire list, click the "Clear List" button.</li>
+		<li>To download the list as a text file, click the "Download" button.</li>
+		<li>To open the options/help menu, click the "Options" button.</li>
+		<li>To open the password generator, click the "Password Generator" button.</li>
+		<li>To save the current tab session, click the "Save Session" button.</li>
+		<li>To restore the saved tab session, click the "Restore Session" button.</li>
+	</ol>
+
+	<p>Please note that URLs starting with "http", "https", "chrome:", "edge:", or "chrome-extension:" are considered safe and clickable.</p>
         </div>
         <br>
         <br>
+        <div class="line"></div>
         <br>
         <br>
         <br>
         <br>
         <div class="optionsection">
             <h2>Options</h2>
-            <hr class="line-anim">
-            <label for="iconselect">Choose a iconstyle</label>
+            <br>
+            <br>
+            <label for="iconselect">Choose an icon style</label>
             <br>
             <div class="iconpreview">
                 <br>
@@ -43,40 +67,25 @@
                 <option value="hacker">Hacker</option>
                 <option value="smart-key">Smart Key</option>
                 <option value="web-key">Web Key</option>
-              </select>
-              <br>
-              <br>
-
+            </select>
+            <br>
+            <br>
             <button id="change-icon-btn" class="button-with-icon">
                 <img src="../assets/img/rotate-solid.svg" alt="GitHub Icon" class="icon">
                 Change Icon
             </button>
-            <!--
-
-                <div class="color-scheme-container">
-                    <label for="color-scheme">Choose a color scheme</label>
-                    <input type="radio" id="color-scheme-light" name="color-scheme" value="light" checked>
-                    <label for="color-scheme-light">Light</label>
-                    <input type="radio" id="color-scheme-dark" name="color-scheme" value="dark">
-                    <label for="color-scheme-dark">Dark</label>
-                </div>
-                <br>
-                <button id="change-scheme-btn" class="button-with-icon">
-                <img src="/assets/img/rotate-solid.svg" alt="GitHub Icon" class="icon">
-                Change Theme
-            </button>
-        -->
+            
         </div>
-        <br>
         <br>
         <br>
         <br>
         <br>
         <p id="option-desc">
             <h2>Contact</h2>
-            <hr class="line-anim">
+            
+            <br>
             <br><b><u>Please note:</u></b><br>This project is special. The addon is being developed by an artificial intelligence, with little assistance from me.
-            <br>If you have any problems, suggestions or questions, you can reach me via the following buttons.
+            <br>If you have any problems, suggestions, or questions, you can reach me via the following buttons.
             <br>
             <br>
             <b>All the best!</b>
@@ -84,27 +93,26 @@
             <b>2023 © S3R43o3</b>
         </p>
         <div class="social-container">
-            
-                <button id="social-github" class="button-with-icon">
-                    <img src="../assets/img/github.svg" alt="GitHub Icon" class="icon" >
-                    Github
-                </button>
-                <br>
-                <br>
-                <button id="social-youtube" class="button-with-icon">
-                    <img src="../assets/img/youtube.svg" alt="GitHub Icon" class="icon" >
-                    Youtube
-                </button>
-                <br>
-                <button id="social-codepen" class="button-with-icon">
-                    <img src="../assets/img/codepen.svg" alt="GitHub Icon" class="icon" >
-                    Codepen
-                </button>
-                <br>
-                <button id="social-thm" class="button-with-icon">
-                    <img src="../assets/img/user-secret-solid.svg" alt="GitHub Icon" class="icon">
-                    TryHackMe
-                </button>
+            <button id="social-github" class="button-with-icon">
+                <img src="../assets/img/github.svg" alt="GitHub Icon" class="icon" >
+                GitHub
+            </button>
+            <br>
+            <br>
+            <button id="social-youtube" class="button-with-icon">
+                <img src="../assets/img/youtube.svg" alt="YouTube Icon" class="icon" >
+                YouTube
+            </button>
+            <br>
+            <button id="social-codepen" class="button-with-icon">
+                <img src="../assets/img/codepen.svg" alt="CodePen Icon" class="icon" >
+                CodePen
+            </button>
+            <br>
+            <button id="social-thm" class="button-with-icon">
+                <img src="../assets/img/user-secret-solid.svg" alt="TryHackMe Icon" class="icon">
+                TryHackMe
+            </button>
         </div>
     </center>
 </body>

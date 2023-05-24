@@ -20,8 +20,8 @@
         "tabs",
         "notifications",
         "activeTab",
-        "bookmarks",
-        "sessions"
+        "bookmarks"
+
     ],
     "background": {
         "service_worker": "background.js"

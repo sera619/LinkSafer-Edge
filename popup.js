@@ -226,7 +226,7 @@ function myConfirm(message, title = "Attention") {
 	modalContent.style.display = "block";
 	modalContent.style.margin = "8px";
 	modalContent.style.padding = "20px";
-	modalContent.style.border = "1px solid #888";
+	//modalContent.style.border = "1px solid #888";
 	modalContent.style.width = "80%";
 
 	var h = document.createElement("h3");
@@ -234,6 +234,7 @@ function myConfirm(message, title = "Attention") {
 
 	modalContent.appendChild(h);
 	var hr = document.createElement("hr");
+	hr.className = "line-anim"
 	modalContent.appendChild(hr);
 
 	var p = document.createElement("p");
@@ -299,12 +300,42 @@ function getBookmarkDirs(callback) {
 	});
 }
 
+function createBookmark() {
+    const bookmarkName = document.getElementById("bookmark-name");
+    const bookmarkURL = document.getElementById("bookmark-url");
+    const bookmarkDirSelect = document.getElementById("bookmark-dir-select");
+    const selectedDir = bookmarkDirSelect.options[bookmarkDirSelect.selectedIndex].text;
+
+	if(bookmarkName === ""){
+		myConfirm("Please enter a valid name for your new bookmark!", "attention");
+		return;
+	} else {
+
+		chrome.bookmarks.getTree(function (bookmarkTreeNodes) {
+			bookmarkTreeNodes.forEach(function (node) {
+				if (node.children) {
+					node.children.forEach(function (child) {
+						if (child.title === selectedDir) {
+							chrome.bookmarks.create({ parentId: child.id, title: bookmarkName.value, url: bookmarkURL.value }, function (newBookmark) {
+								//console.log("Bookmark created:", newBookmark);
+								myConfirm("The URL: "+bookmarkURL+" successfully saved with name: "+bookmarkName+" !", "success");
+								bookmarkName.value = "";
+								bookmarkURL.value = "";
+							});
+						}
+					});
+				}
+			});
+		});
+	}
+}
+
+
 function showBookmarkDisplay(link) {
 	var bookmarkframe = document.getElementById("bookmarkframe");
 	var mainframe = document.getElementById("main");
 	bookmarkframe.toggleAttribute("hidden");
 	mainframe.toggleAttribute("hidden");
-	const bookmarkName = document.getElementById("bookmark-name");
 	const bookmarkURL = document.getElementById("bookmark-url");
 	const bookmarkDirSelect = document.getElementById("bookmark-dir-select");
 	bookmarkURL.value = link;
@@ -375,7 +406,7 @@ async function downloadTextFile() {
 		a.href = url;
 		a.download = "links.txt";
 		a.click();
-		myConfirm("Your link & notice list successfully downloaded!", "Information");
+		myConfirm("Your link & notice list successfully downloaded!", "success");
 		a.remove();
 	});
 }
@@ -412,30 +443,36 @@ function addTooltip(element, description) {
 }
 
 function restoreTabsFromSyncStorage() {
-	chrome.storage.sync.get("savedTabs", function (result) {
-		var tabData = result.savedTabs || [];
+	chrome.storage.sync.get('savedTabs', function (data) {
+		var savedTabs = data.savedTabs || [];
 
-		tabData.forEach(function (tab) {
+		savedTabs.forEach(function (tab) {
 			chrome.tabs.create({
-				url: tab.url,
-				active: false
+				url: tab.url
 			});
 		});
 
-		console.log("Tabs restored from sync storage:", tabData);
+		console.log("Tabs restored from sync storage:", savedTabs);
+		myConfirm("Last saved tab session successfully restored from sync storage!", "success")
 	});
 }
 
+function deleteTabsFromSyncStorage() {
+	chrome.storage.sync.remove('savedTabs', function () {
+		console.log("Tabs deleted from sync storage");
+		myConfirm("Tabs deleted from sync storage successfully!", "success");
+	});
+}
+
+
 function saveTabsToSyncStorage() {
-	chrome.sessions.getRecentlyClosed({
-		maxResults: 100
-	}, function (sessions) {
-		var tabData = sessions.filter(function (session) {
-			return session.tab && session.tab.url.startsWith("http");
-		}).map(function (session) {
+	chrome.tabs.query({}, function (tabs) {
+		var tabData = tabs.filter(function (tab) {
+			return tab.url.startsWith("http");
+		}).map(function (tab) {
 			return {
-				url: session.tab.url,
-				title: session.tab.title,
+				url: tab.url,
+				title: tab.title,
 			};
 		});
 
@@ -443,10 +480,10 @@ function saveTabsToSyncStorage() {
 			savedTabs: tabData
 		}, function () {
 			console.log("Tabs saved to sync storage:", tabData);
+			myConfirm("Tab session successfully saved to sync storage", "success")
 		});
 	});
 }
-
 
 
 // init popup and eventhandler
@@ -483,9 +520,6 @@ document.addEventListener("DOMContentLoaded", function () {
 	const notifyButton = document.getElementById("notify-btn");
 	notifyButton.addEventListener("click", function (event) {
 		event.preventDefault();
-		//showNotify();
-		//showAlert("Testalert");
-		//myConfirm("Test");
 		changeDisplayFrame();
 	});
 	addTooltip(notifyButton, "Open passwordgenerator");
@@ -493,19 +527,27 @@ document.addEventListener("DOMContentLoaded", function () {
 	addTooltip(addNoteButton, "Add note to list");
 
 	const saveSessionButton = document.getElementById("save-session-btn");
-	saveSessionButton.addEventListener("click", function(event){
+	saveSessionButton.addEventListener("click", function (event) {
 		event.preventDefault();
 		saveTabsToSyncStorage();
 
 	})
 	addTooltip(saveSessionButton, "Save your current tab session");
-	
+
 	const restoreSessionButton = document.getElementById('restore-session-btn');
-	restoreSessionButton.addEventListener("click", function(event){
+	restoreSessionButton.addEventListener("click", function (event) {
 		event.preventDefault();
 		restoreTabsFromSyncStorage();
 	})
 	addTooltip(restoreSessionButton, "Restore your saved tab session");
+
+	const clearSessionButton = document.getElementById("clear-session-btn");
+	clearSessionButton.addEventListener("click", function(event) {
+		event.preventDefault();
+		deleteTabsFromSyncStorage();
+	})
+	addTooltip(clearSessionButton,"Delete saved tab session");
+
 
 	const passlenslider = document.getElementById("password-length");
 	const passsizetext = document.getElementById("passlen");
@@ -539,11 +581,18 @@ document.addEventListener("DOMContentLoaded", function () {
 		showBookmarkDisplay();
 	})
 
+	const addBookmarkButton = document.getElementById('add-bookmark-btn');
+	addBookmarkButton.addEventListener("click", function(event){
+		event.preventDefault();
+		createBookmark();
+	})
+
 	const donwloadBtn = document.getElementById("download-list-btn");
 	donwloadBtn.addEventListener("click", function (event) {
 		event.preventDefault();
 		downloadTextFile();
 	});
+
 	const VERSIONNUM = getExtensionVersion();
 	var version =
 		"v" + VERSIONNUM + "\nDevelopment & Design 2022-2023 © S3R43o3 & AI";
