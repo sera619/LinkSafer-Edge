@@ -1,6 +1,6 @@
 # Link Safer - Edge
 
-Link Safer is a browser extension available for Edge and Chrome that provides a secure and convenient way to manage saved hyperlinks and notes. With this extension, users can perform various actions such as shortening links, opening hyperlinks, deleting saved items, and adding new links. It also includes a password generator feature and the ability to change the addon logo.
+Link Safer is a browser extension available for Edge and Chrome that provides a secure and convenient way to manage saved hyperlinks and notes. With this extension, users can perform various actions such as shortening links, opening hyperlinks, deleting saved items, and adding new links. It also includes a password generator feature and the ability to change the addon logo. On top off all that is it possible to save/delete/restore current tab sessions or save a URL in your list as bookmark.
 
 ## Table of Contents
 
