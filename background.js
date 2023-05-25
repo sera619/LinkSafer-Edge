@@ -96,19 +96,6 @@ function saveAddonIcon(iconPath) {
     });
 }
 
-function loadAddonIcon() {
-    chrome.storage.sync.get('iconPath', function (data) {
-        var iconPath = data.iconPath;
-        if (iconPath) {
-            changeAddonIcon(iconPath);
-            savedIconPath = iconPath;
-            console.log('Addon icon loaded:', iconPath);
-        }
-    });
-}
-
-
-
 // remove hyperlink or notice from browser storage
 function removeLink(link) {
     chrome.storage.sync.get('links', function (data) {
