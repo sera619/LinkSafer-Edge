@@ -14,7 +14,7 @@
         "256": "assets/img/icons/hacker/icon256.png"
     },
     "options_page": "src/options.html",
-    "description": "Link Safer is an extension for the Microsoft Edge browser that allows users to save links and notes securely.",
+    "description": "Link Safer is an extension for the Edge/Chrome browser that allows users to save links and notes securely.",
     "permissions": [
         "storage",
         "tabs",
