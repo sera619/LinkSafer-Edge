@@ -3,7 +3,7 @@
     "manifest_version": 3,
     "name": "Link Safer",
     "author": "S3R43o3",
-    "version": "2.3.6",
+    "version": "2.3.8",
     "icons": {
         "16": "assets/img/icons/hacker/icon16.png",
         "32": "assets/img/icons/hacker/icon32.png",
