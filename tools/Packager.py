@@ -16,14 +16,23 @@ def zip_project_root(root_dir, output_dir):
         for root, dirs, files in os.walk(root_dir):
             if 'tools' in dirs:
                 dirs.remove('tools')
+            if 'test' in dirs:
+                dirs.remove('test')
+            if '.git' in dirs:
+                dirs.remove('.git')
+
+
             if os.path.samefile(root, output_dir):
                 continue
             relative_path = os.path.relpath(root, root_dir)
             for file in files:
                 file_path = os.path.join(root, file)
+                if file == '.env' or file == '.gitignore':  # Exclude .env file
+                    continue
                 zip_path = os.path.join(relative_path, file)
                 zipf.write(file_path, zip_path)
     print(f'The project successfully packaged with name: {zip_filename}!')
+
 root_dir = '.'
 output_dir = './package'
 
