@@ -455,16 +455,12 @@ function restoreTabsFromSyncStorage() {
 				url: tab.url
 			});
 		});
-
-		console.log("Tabs restored from sync storage:", savedTabs);
 		myConfirm("Last saved tab session successfully restored from sync storage!", "success")
 	});
 }
 
 function deleteTabsFromSyncStorage() {
 	chrome.storage.sync.remove('savedTabs', function () {
-		console.log("Tabs deleted from sync storage");
-		myConfirm("Tabs deleted from sync storage successfully!", "success");
 		updateSessionDisplay();
 	});
 }
@@ -484,8 +480,6 @@ function saveTabsToSyncStorage() {
 		chrome.storage.sync.set({
 			savedTabs: tabData
 		}, function () {
-			console.log("Tabs saved to sync storage:", tabData);
-			myConfirm("Tab session successfully saved to sync storage", "success")
 			updateSessionDisplay();
 		});
 	});
