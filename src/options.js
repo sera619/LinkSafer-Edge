@@ -55,19 +55,19 @@ function changePreviewIcon(icontype) {
     var iconpreview = document.getElementById("previewimg");
     switch (icontype) {
         case "normal":
-            iconpreview.src = chrome.runtime.getURL("../assets/img/icons/normal/icon128.png");
+            iconpreview.src = chrome.runtime.getURL(ICON_DEFAULT_PATHS[128]);
             break;
         case "binary":
-            iconpreview.src = chrome.runtime.getURL("../assets/img/icons/binarycode/icon128.png");
+            iconpreview.src = chrome.runtime.getURL(ICON_BINARY_PATHS[128]);
             break;
         case "web-key":
-            iconpreview.src = chrome.runtime.getURL("../assets/img/icons/web-security/icon128.png");
+            iconpreview.src = chrome.runtime.getURL(ICON_WEB_KEY_PATHS[128]);
             break;
         case "smart-key":
-            iconpreview.src = chrome.runtime.getURL("../assets/img/icons/smart-key/icon128.png");
+            iconpreview.src = chrome.runtime.getURL(ICON_SMART_KEY_PATHS[128]);
             break;
         case "hacker":
-            iconpreview.src = chrome.runtime.getURL("../assets/img/icons/hacker/icon128.png");
+            iconpreview.src = chrome.runtime.getURL(ICON_HACKER_PATHS[128]);
             break;
         default:
             break;
