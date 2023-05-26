@@ -286,6 +286,12 @@ input[type="submit"]:active {
     transform: scale(0.9) rotate(-10deg);
 }
 
+.button-with-icon:disabled,
+input[type="button"]:disabled,
+input[type="submit"]:disabled {
+    background: linear-gradient(to right, #6b6a6a 0%, rgba(255, 255, 255, 0.3)100%);
+}
+
 
 .social-container {
     padding: 10px;
@@ -469,4 +475,10 @@ select {
     padding: .8em 1.3em;
     border: 1px solid var(--color-primary);
     border-radius: 5px;
+}
+#session-info-display{
+    font-family: "NorthStarHalf", "half-tone";
+    letter-spacing: 0.3em;
+    font-size: 1.2em;
+
 }

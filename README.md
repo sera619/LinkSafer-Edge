@@ -4,7 +4,7 @@ Link Safer is a browser extension available for Edge and Chrome that provides a 
 
 ## Table of Contents
 
-- [Link Safer - Edge](#link-safer---edge)
+- [Link Safer - Edge/Chrome](#link-safer---edgechrome)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Features](#features)
@@ -15,7 +15,9 @@ Link Safer is a browser extension available for Edge and Chrome that provides a 
 
 ## Installation
 
-Finally you can download the addon from the official [Microsoft-Extensionstore](https://microsoftedge.microsoft.com/addons/detail/link-safer/anmopkdaijlnkbanjbfkofbbhcplceof)
+You can download the addon from the official [Microsoft-Extensionstore](https://microsoftedge.microsoft.com/addons/detail/link-safer/anmopkdaijlnkbanjbfkofbbhcplceof)
+
+Link Safer is also available on the official [Google Chrome Webstore](https://chrome.google.com/webstore/detail/link-safer/mpegkapgniohpbkjlddpbmdfcapafiaf)
 
 Additionally, a Firefox version (currently not updated but will follow soon) is also available for download from the [Firefox-Extensionstore](https://addons.mozilla.org/de/firefox/addon/linksafer/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search).
 
@@ -44,8 +46,9 @@ If you prefer to install the extension manually, follow these steps:
 - **Deleting Items:** Saved items can be easily deleted by clicking on the "X" button next to each item.
 - **Clearing the List:** The extension provides an option to clear the entire list of saved links and notes. This action removes all items from the list.
 - **Password Generator:** Link Safer includes a password generator feature that allows users to generate strong and secure passwords. This feature helps users create unique and complex passwords for their online accounts.
-- **Changing Addon Logo:** Users have the ability to customize the addon logo. They can choose from a set of predefined logos or upload their own logo image to personalize the appearance of the extension.
 - **Saving and Restoring Tabs:** The extension allows users to save the currently open tabs and later restore them. This feature is useful for quickly accessing a set of frequently used tabs or for resuming work from a previous session.
+- **Downloading the List:** Users have the option to download their saved links and notes list. This allows them to have a backup of their data or share it with others.
+- **Changing Addon Logo:** Users have the ability to customize the addon logo. They can choose from a set of predefined logos or upload their own logo image to personalize the appearance of the extension.
 
 <details>
     <summary>Screenshots</summary>

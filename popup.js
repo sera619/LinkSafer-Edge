@@ -465,6 +465,7 @@ function deleteTabsFromSyncStorage() {
 	chrome.storage.sync.remove('savedTabs', function () {
 		console.log("Tabs deleted from sync storage");
 		myConfirm("Tabs deleted from sync storage successfully!", "success");
+		updateSessionDisplay();
 	});
 }
 
@@ -485,7 +486,27 @@ function saveTabsToSyncStorage() {
 		}, function () {
 			console.log("Tabs saved to sync storage:", tabData);
 			myConfirm("Tab session successfully saved to sync storage", "success")
+			updateSessionDisplay();
 		});
+	});
+}
+
+function updateSessionDisplay() {
+	const display = document.getElementById("session-info-display");
+	const restoreSessionButton = document.getElementById("restore-session-btn");
+	const clearSessionButton = document.getElementById("clear-session-btn");
+	chrome.storage.sync.get("savedTabs", function (result) {
+		if (result.savedTabs) {
+			restoreSessionButton.disabled = false;
+			clearSessionButton.disabled = false;
+			display.style.color = "green";
+			display.innerText = "Stored tab session available!";
+		} else {
+			restoreSessionButton.disabled = true;
+			clearSessionButton.disabled = true;
+			display.style.color = "#ff0000";
+			display.innerText = "No tab session available!";
+		}
 	});
 }
 
@@ -503,10 +524,12 @@ function getShowTooltipOption(callback) {
 	});
 }
 
+
 // init popup and eventhandler
 document.addEventListener("DOMContentLoaded", function () {
 	showLinks();
 	setDownloadBtnVisible(true);
+	updateSessionDisplay();
 	const addLinkForm = document.getElementById("addLinkForm");
 	addLinkForm.addEventListener("submit", function (event) {
 		event.preventDefault();
